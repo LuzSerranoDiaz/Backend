@@ -1,8 +1,6 @@
 networks: 
     laravel:
         driver: bridge
-volumes:
-    mysql_data:
 
 services: 
     nginx:
@@ -30,7 +28,7 @@ services:
         ports: 
             - 4306:3306
         volumes: 
-            - mysql_data:/var/lib/mysql
+            - ./mysql:/var/lib/mysql
         environment: 
             MYSQL_DATABASE: laravel_docker
             MYSQL_USER: user
@@ -55,6 +53,3 @@ services:
             - 9000:9000
         networks: 
             - laravel
-
-
-            
