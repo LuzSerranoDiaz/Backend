@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('clientes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('usuario_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
-            $table->foreignId('contrato_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('DNI');
             $table->timestamps();
         });
