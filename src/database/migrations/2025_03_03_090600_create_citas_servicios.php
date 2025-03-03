@@ -11,13 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('contratos', function (Blueprint $table) {
+        Schema::create('citas_servicios', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('cliente_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
-            $table->integer('numero_de_atenciones');
-            $table->integer('numero_de_atenciones_realizadas');
-            $table->dateTime('fecha_inicio');
-            $table->dateTime('fecha_fin');
+            $table->foreignId('cita_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('servicio_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
         });
     }
@@ -27,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('contratos');
+        Schema::dropIfExists('citas_servicios');
     }
 };
