@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Usuario;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -17,8 +18,10 @@ class ClienteFactory extends Factory
      */
     public function definition(): array
     {
+        $usuario_id = Usuario::pluck('id')->toArray();
+
         return [
-            'usuario_id' => rand(1,3000),
+            'usuario_id' => fake()->randomElement($usuario_id),
             'DNI' => Str::random(9),
         ];
     }

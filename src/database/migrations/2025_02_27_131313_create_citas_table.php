@@ -16,9 +16,8 @@ return new class extends Migration
             $table->foreignId('cliente_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('empleado_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('contrato_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
-            $table->foreignId('servicio_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->dateTime('fecha')->unique();
-            $table->enum('estado', ['pendant', 'cancelled']);
+            $table->enum('estado', ['pendiente', 'cancelado']);
             $table->integer('numero_de_atenciones');
             $table->timestamps();
         });

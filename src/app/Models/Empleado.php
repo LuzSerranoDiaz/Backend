@@ -2,12 +2,16 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Notifications\Notifiable;
 
 class Empleado extends Model
 {
+    use HasFactory, Notifiable;
     /**
      * Get the user associated with the Cliente
      *
@@ -17,13 +21,14 @@ class Empleado extends Model
     {
         return $this->hasOne(Usuario::class);
     }
-    /**
-     * Get all of the especialidades for the Empleado
+
+        /**
+     * The empleados that belong to the Especialidad
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function especialidades(): HasMany
+    public function especialidades(): BelongsToMany
     {
-        return $this->hasMany(Especialidad::class);
+        return $this->belongsToMany(Especialidad::class, 'empleado_especialidads', 'empleado_id', 'especialidad_id');
     }
 }

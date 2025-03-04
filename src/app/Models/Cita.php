@@ -2,13 +2,17 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Notifications\Notifiable;
 
 class Cita extends Model
 {
+
+    use HasFactory, Notifiable;
     /**
      * Get the cliente that owns the Cita
      *
@@ -43,6 +47,6 @@ class Cita extends Model
      */
     public function servicios(): BelongsToMany
     {
-        return $this->belongsToMany(Servicio::class, 'citas_servicios', 'cita_id', 'servicio_id');
+        return $this->belongsToMany(Servicio::class, 'cita_servicios', 'cita_id', 'servicio_id');
     }
 }

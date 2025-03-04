@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Cita;
+use App\Models\Servicio;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -24,4 +26,5 @@ class ServicioFactory extends Factory
             'precio' => rand(1000, 10000) / 100,
         ];
     }
+
 }

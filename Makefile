@@ -5,3 +5,16 @@ up:
 stop:
 	@echo "finalizando backend"
 	@docker compose stop
+
+php:
+	@docker exec -it php sh
+
+mysql:
+	@docker exec -it mysql sh
+
+nginx:
+	@docker exec -it nginx sh
+
+chmod:
+	@sudo chown ${USER}:${USER} src/*
+	@sudo chmod -R 777 src/*
