@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Usuario;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Support\Facades\Hash;
 
@@ -80,22 +82,43 @@ class AuthController extends Controller
             'token_type' => 'Bearer',
         ]);
     }
-
-/*
-    public function userProfile(Request $request)
-    {
+    
+    /**
+     * Cierre de sesion
+     */
+    public function logout(Request $request) {
+        $request->user()->currentAccessToken()->delete();
         return response()->json([
-            'message' => 'Perfil del usuario obtenido exitosamente',
-            'userData' => auth()->user(),
+            'message' => 'Has salido de la cuenta',
         ], 200);
     }
 
-    public function logout(Request $request) {
-        
-    }
+    /*
+    public function validarEmail(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+        ]);
 
-    public function allUsers(Request $request) {
-        
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'El correo proporcionado no es válido.',
+                'errors' => $validator->errors(),
+            ], 400);
+        }
+
+        $user = Usuario::where('email', $request->email)->first();
+
+        if (!$user) {
+            return response()->json([
+                'message' => 'El correo no está registrado.',
+            ], 404);
+        }
+
+        return response()->json([
+            'message' => 'El correo es válido y está registrado.',
+        ], 200);
     }*/
+
 
 }
