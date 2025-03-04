@@ -18,13 +18,7 @@ class Usuario extends Model
     *
     * @var list<string>
     */
-<<<<<<< HEAD
-   protected $fillable = [
-       'name',
-       'email',
-       'contrasena',
-   ];
-=======
+
     protected $fillable = [
         'nombre',
         'apellidos',
@@ -35,7 +29,6 @@ class Usuario extends Model
         'municipio',
         'provincia',
     ];
->>>>>>> cd43d6e7a669aa3e86c738941981f08a1c037f4e
 
    /**
     * The attributes that should be hidden for serialization.
