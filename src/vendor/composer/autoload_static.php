@@ -599,6 +599,10 @@ class ComposerStaticInit71bc9a16b61ef0e849c721fead47610c
         'App\\Models\\Cliente' => __DIR__ . '/../..' . '/app/Models/Cliente.php',
         'App\\Models\\Contrato' => __DIR__ . '/../..' . '/app/Models/Contrato.php',
         'App\\Models\\Empleado' => __DIR__ . '/../..' . '/app/Models/Empleado.php',
+<<<<<<< HEAD
+=======
+        'App\\Models\\Especialidad' => __DIR__ . '/../..' . '/app/Models/Especialidad.php',
+>>>>>>> cd43d6e7a669aa3e86c738941981f08a1c037f4e
         'App\\Models\\Servicio' => __DIR__ . '/../..' . '/app/Models/Servicio.php',
         'App\\Models\\Usuario' => __DIR__ . '/../..' . '/app/Models/Usuario.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',

@@ -16,7 +16,7 @@ class Cita extends Model
      */
     public function cliente(): BelongsTo
     {
-        return $this->belongsTo(Cliente::class, 'foreign_key', 'other_key');
+        return $this->belongsTo(Cliente::class);
     }
     /**
      * Get the contrato that owns the Cita
@@ -25,7 +25,16 @@ class Cita extends Model
      */
     public function contrato(): BelongsTo
     {
-        return $this->belongsTo(Contrato::class, 'foreign_key', 'other_key');
+        return $this->belongsTo(Contrato::class);
+    }
+    /**
+     * Get the empleado that owns the Cita
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function empleado(): BelongsTo
+    {
+        return $this->belongsTo(Empleado::class);
     }
     /**
      * The servicios that belong to the Cita

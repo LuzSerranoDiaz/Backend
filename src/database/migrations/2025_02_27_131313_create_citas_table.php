@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('citas', function (Blueprint $table) {
             $table->id();
             $table->foreignId('cliente_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('empleado_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('contrato_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('servicio_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->dateTime('fecha')->unique();

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Empleado extends Model
@@ -15,5 +16,14 @@ class Empleado extends Model
     public function user(): HasOne
     {
         return $this->hasOne(Usuario::class);
+    }
+    /**
+     * Get all of the especialidades for the Empleado
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function especialidades(): HasMany
+    {
+        return $this->hasMany(Especialidad::class);
     }
 }

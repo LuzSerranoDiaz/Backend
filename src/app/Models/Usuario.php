@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Notifications\Notifiable;
 
 class Usuario extends Model
@@ -17,11 +18,24 @@ class Usuario extends Model
     *
     * @var list<string>
     */
+<<<<<<< HEAD
    protected $fillable = [
        'name',
        'email',
        'contrasena',
    ];
+=======
+    protected $fillable = [
+        'nombre',
+        'apellidos',
+        'email',
+        'contrasena',
+        'tlf',
+        'direccion',
+        'municipio',
+        'provincia',
+    ];
+>>>>>>> cd43d6e7a669aa3e86c738941981f08a1c037f4e
 
    /**
     * The attributes that should be hidden for serialization.
@@ -29,28 +43,27 @@ class Usuario extends Model
     * @var list<string>
     */
    protected $hidden = [
-       'password',
-       'remember_token',
+       
    ];
 
    /**
-    * Get the empleado that owns the Usuario
+    * Get the empleado associated with the Usuario
     *
-    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+    * @return \Illuminate\Database\Eloquent\Relations\HasOne
     */
-   public function empleado(): BelongsTo
+   public function empleado(): HasOne
    {
-       return $this->belongsTo(Empleado::class);
+       return $this->hasOne(Empleado::class);
    }
 
    /**
-    * Get the cliente that owns the Usuario
+    * Get the cliente associated with the Usuario
     *
-    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+    * @return \Illuminate\Database\Eloquent\Relations\HasOne
     */
-   public function cliente(): BelongsTo
+   public function cliente(): HasOne
    {
-       return $this->belongsTo(Cliente::class);
+       return $this->hasOne(Cliente::class);
    }
 
    /**

@@ -12,6 +12,10 @@ return array(
     'App\\Models\\Cliente' => $baseDir . '/app/Models/Cliente.php',
     'App\\Models\\Contrato' => $baseDir . '/app/Models/Contrato.php',
     'App\\Models\\Empleado' => $baseDir . '/app/Models/Empleado.php',
+<<<<<<< HEAD
+=======
+    'App\\Models\\Especialidad' => $baseDir . '/app/Models/Especialidad.php',
+>>>>>>> cd43d6e7a669aa3e86c738941981f08a1c037f4e
     'App\\Models\\Servicio' => $baseDir . '/app/Models/Servicio.php',
     'App\\Models\\Usuario' => $baseDir . '/app/Models/Usuario.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',

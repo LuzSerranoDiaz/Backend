@@ -21,13 +21,3 @@ class UsuarioPruebaSeeder extends Seeder
         ]);
     }
 }
-
-/* 'email' => fake()->unique()->safeEmail(),
-'password' => static::$password ??= Hash::make('password'),
-'nombre' => fake()->name(),
-'apellidos' => fake()->lastName(),
-'tlf' => fake()->unique()->phoneNumber(),
-'direccion' => fake()->address(),
-'municipio' => fake()->city(),
-'provincia' => fake()->country(), // Country ya que no hay especifico para provincia 
-'remember_token' => Str::random(10), */
