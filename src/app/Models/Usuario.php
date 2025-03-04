@@ -7,22 +7,28 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 class Usuario extends Model
 {
    /** @use HasFactory<\Database\Factories\UserFactory> */
-   use HasFactory, Notifiable;
+   use HasFactory, Notifiable, HasApiTokens;
 
    /**
     * The attributes that are mass assignable.
     *
     * @var list<string>
     */
-   protected $fillable = [
-       'name',
-       'email',
-       'password',
-   ];
+    protected $fillable = [
+        'nombre',
+        'apellidos',
+        'email',
+        'contrasena',
+        'tlf',
+        'direccion',
+        'municipio',
+        'provincia',
+    ];
 
    /**
     * The attributes that should be hidden for serialization.
@@ -30,8 +36,7 @@ class Usuario extends Model
     * @var list<string>
     */
    protected $hidden = [
-       'password',
-       'remember_token',
+       'contrasena',
    ];
 
    /**

@@ -11,3 +11,4 @@ Route::get('register', [AuthController::class, 'register']);
 Route::middleware('api')->post('/data', function (Request $request) {
     return response()->json(['received' => $request->all()]);
 });
+
