@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInite08334651ce0b12e409af9e125ee397d
+class ComposerStaticInit71bc9a16b61ef0e849c721fead47610c
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
@@ -141,10 +141,7 @@ class ComposerStaticInite08334651ce0b12e409af9e125ee397d
             'League\\CommonMark\\' => 18,
             'Laravel\\Tinker\\' => 15,
             'Laravel\\SerializableClosure\\' => 28,
-<<<<<<< HEAD
             'Laravel\\Sanctum\\' => 16,
-=======
->>>>>>> e984fb676d7f49ba1bb0606ddde4469d5b22f729
             'Laravel\\Sail\\' => 13,
             'Laravel\\Prompts\\' => 16,
             'Laravel\\Pail\\' => 13,
@@ -472,13 +469,10 @@ class ComposerStaticInite08334651ce0b12e409af9e125ee397d
         array (
             0 => __DIR__ . '/..' . '/laravel/serializable-closure/src',
         ),
-<<<<<<< HEAD
         'Laravel\\Sanctum\\' => 
         array (
             0 => __DIR__ . '/..' . '/laravel/sanctum/src',
         ),
-=======
->>>>>>> e984fb676d7f49ba1bb0606ddde4469d5b22f729
         'Laravel\\Sail\\' => 
         array (
             0 => __DIR__ . '/..' . '/laravel/sail/src',
@@ -599,7 +593,6 @@ class ComposerStaticInite08334651ce0b12e409af9e125ee397d
     );
 
     public static $classMap = array (
-<<<<<<< HEAD
         'App\\Http\\Controllers\\Api\\AuthController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/AuthController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Models\\Cita' => __DIR__ . '/../..' . '/app/Models/Cita.php',
@@ -608,10 +601,6 @@ class ComposerStaticInite08334651ce0b12e409af9e125ee397d
         'App\\Models\\Empleado' => __DIR__ . '/../..' . '/app/Models/Empleado.php',
         'App\\Models\\Servicio' => __DIR__ . '/../..' . '/app/Models/Servicio.php',
         'App\\Models\\Usuario' => __DIR__ . '/../..' . '/app/Models/Usuario.php',
-=======
-        'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
-        'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
->>>>>>> e984fb676d7f49ba1bb0606ddde4469d5b22f729
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
         'Brick\\Math\\BigDecimal' => __DIR__ . '/..' . '/brick/math/src/BigDecimal.php',
@@ -730,7 +719,6 @@ class ComposerStaticInite08334651ce0b12e409af9e125ee397d
         'Cron\\HoursField' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/HoursField.php',
         'Cron\\MinutesField' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/MinutesField.php',
         'Cron\\MonthField' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/MonthField.php',
-<<<<<<< HEAD
         'Database\\Factories\\CitaFactory' => __DIR__ . '/../..' . '/database/factories/CitaFactory.php',
         'Database\\Factories\\ClienteFactory' => __DIR__ . '/../..' . '/database/factories/ClienteFactory.php',
         'Database\\Factories\\ContratoFactory' => __DIR__ . '/../..' . '/database/factories/ContratoFactory.php',
@@ -739,10 +727,6 @@ class ComposerStaticInite08334651ce0b12e409af9e125ee397d
         'Database\\Factories\\UsuarioFactory' => __DIR__ . '/../..' . '/database/factories/UsuarioFactory.php',
         'Database\\Seeders\\DatabaseSeeder' => __DIR__ . '/../..' . '/database/seeders/DatabaseSeeder.php',
         'Database\\Seeders\\UsuarioPruebaSeeder' => __DIR__ . '/../..' . '/database/seeders/UsuarioPruebaSeeder.php',
-=======
-        'Database\\Factories\\UserFactory' => __DIR__ . '/../..' . '/database/factories/UserFactory.php',
-        'Database\\Seeders\\DatabaseSeeder' => __DIR__ . '/../..' . '/database/seeders/DatabaseSeeder.php',
->>>>>>> e984fb676d7f49ba1bb0606ddde4469d5b22f729
         'DateError' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/DateError.php',
         'DateException' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/DateException.php',
         'DateInvalidOperationException' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/DateInvalidOperationException.php',
@@ -3074,7 +3058,6 @@ class ComposerStaticInite08334651ce0b12e409af9e125ee397d
         'Laravel\\Sail\\Console\\InstallCommand' => __DIR__ . '/..' . '/laravel/sail/src/Console/InstallCommand.php',
         'Laravel\\Sail\\Console\\PublishCommand' => __DIR__ . '/..' . '/laravel/sail/src/Console/PublishCommand.php',
         'Laravel\\Sail\\SailServiceProvider' => __DIR__ . '/..' . '/laravel/sail/src/SailServiceProvider.php',
-<<<<<<< HEAD
         'Laravel\\Sanctum\\Console\\Commands\\PruneExpired' => __DIR__ . '/..' . '/laravel/sanctum/src/Console/Commands/PruneExpired.php',
         'Laravel\\Sanctum\\Contracts\\HasAbilities' => __DIR__ . '/..' . '/laravel/sanctum/src/Contracts/HasAbilities.php',
         'Laravel\\Sanctum\\Contracts\\HasApiTokens' => __DIR__ . '/..' . '/laravel/sanctum/src/Contracts/HasApiTokens.php',
@@ -3095,8 +3078,6 @@ class ComposerStaticInite08334651ce0b12e409af9e125ee397d
         'Laravel\\Sanctum\\Sanctum' => __DIR__ . '/..' . '/laravel/sanctum/src/Sanctum.php',
         'Laravel\\Sanctum\\SanctumServiceProvider' => __DIR__ . '/..' . '/laravel/sanctum/src/SanctumServiceProvider.php',
         'Laravel\\Sanctum\\TransientToken' => __DIR__ . '/..' . '/laravel/sanctum/src/TransientToken.php',
-=======
->>>>>>> e984fb676d7f49ba1bb0606ddde4469d5b22f729
         'Laravel\\SerializableClosure\\Contracts\\Serializable' => __DIR__ . '/..' . '/laravel/serializable-closure/src/Contracts/Serializable.php',
         'Laravel\\SerializableClosure\\Contracts\\Signer' => __DIR__ . '/..' . '/laravel/serializable-closure/src/Contracts/Signer.php',
         'Laravel\\SerializableClosure\\Exceptions\\InvalidSignatureException' => __DIR__ . '/..' . '/laravel/serializable-closure/src/Exceptions/InvalidSignatureException.php',
@@ -7514,9 +7495,9 @@ class ComposerStaticInite08334651ce0b12e409af9e125ee397d
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInite08334651ce0b12e409af9e125ee397d::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInite08334651ce0b12e409af9e125ee397d::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInite08334651ce0b12e409af9e125ee397d::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit71bc9a16b61ef0e849c721fead47610c::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit71bc9a16b61ef0e849c721fead47610c::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit71bc9a16b61ef0e849c721fead47610c::$classMap;
 
         }, null, ClassLoader::class);
     }

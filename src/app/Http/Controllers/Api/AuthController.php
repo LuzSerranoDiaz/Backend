@@ -24,7 +24,7 @@ class AuthController extends Controller
         $user->contrasena = $request->password; 
         $user->save();
 
-        return  response()->json([
+        return response()->json([
             "message" => "Estas registrado"
         ]);
     }

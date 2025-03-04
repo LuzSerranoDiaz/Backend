@@ -1,13 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'laravel/laravel',
-        'pretty_version' => 'dev-main',
-        'version' => 'dev-main',
-<<<<<<< HEAD
-        'reference' => '0c0646ebcbfc779ccc37c4c84b5cc70696a73f20',
-=======
-        'reference' => '2bee20cfd9c6afa4c1f878ef9b53fa91ea44d6d1',
->>>>>>> e984fb676d7f49ba1bb0606ddde4469d5b22f729
+        'pretty_version' => '1.0.0+no-version-set',
+        'version' => '1.0.0.0',
+        'reference' => null,
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -426,13 +422,9 @@
             'dev_requirement' => false,
         ),
         'laravel/laravel' => array(
-            'pretty_version' => 'dev-main',
-            'version' => 'dev-main',
-<<<<<<< HEAD
-            'reference' => '0c0646ebcbfc779ccc37c4c84b5cc70696a73f20',
-=======
-            'reference' => '2bee20cfd9c6afa4c1f878ef9b53fa91ea44d6d1',
->>>>>>> e984fb676d7f49ba1bb0606ddde4469d5b22f729
+            'pretty_version' => '1.0.0+no-version-set',
+            'version' => '1.0.0.0',
+            'reference' => null,
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -474,7 +466,6 @@
             'aliases' => array(),
             'dev_requirement' => true,
         ),
-<<<<<<< HEAD
         'laravel/sanctum' => array(
             'pretty_version' => 'v4.0.8',
             'version' => '4.0.8.0',
@@ -484,8 +475,6 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
-=======
->>>>>>> e984fb676d7f49ba1bb0606ddde4469d5b22f729
         'laravel/serializable-closure' => array(
             'pretty_version' => 'v2.0.3',
             'version' => '2.0.3.0',
