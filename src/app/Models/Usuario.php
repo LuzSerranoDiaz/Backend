@@ -18,11 +18,16 @@ class Usuario extends Model
     *
     * @var list<string>
     */
-   protected $fillable = [
-       'name',
-       'email',
-       'password',
-   ];
+    protected $fillable = [
+        'nombre',
+        'apellidos',
+        'email',
+        'contrasena',
+        'tlf',
+        'direccion',
+        'municipio',
+        'provincia',
+    ];
 
    /**
     * The attributes that should be hidden for serialization.
@@ -30,8 +35,7 @@ class Usuario extends Model
     * @var list<string>
     */
    protected $hidden = [
-       'password',
-       'remember_token',
+       
    ];
 
    /**
