@@ -28,22 +28,28 @@ class AuthController extends Controller
             'provincia' => 'required|string|max:255',
         ]);
 
-        // Crear el usuario sin encriptar la contraseña
+        // Crear el usuario con la contraseña encriptada
         $usuario = Usuario::create([
             'nombre' => $validatedData['nombre'],
             'apellidos' => $validatedData['apellidos'],
             'email' => $validatedData['email'],
-            'contrasena' => $validatedData['contrasena'], 
+            'contrasena' => $validatedData['contrasena'],
             'tlf' => $validatedData['tlf'],
             'direccion' => $validatedData['direccion'],
             'municipio' => $validatedData['municipio'],
             'provincia' => $validatedData['provincia'],
         ]);
 
-        // Respuesta exitosa
+        // Generar un token de acceso personal
+        $token = $usuario->createToken('auth_token')->plainTextToken;
+
+        // Respuesta exitosa con el token
         return response()->json([
             'message' => 'Usuario registrado exitosamente',
-            'usuario' => $usuario,
+            'access_token' => $token,
+            'token_type' => 'Bearer',
+            'email' => $usuario->email,
+            'contrasena' => $validatedData['contrasena'], 
         ], 201);
     }
 
@@ -52,36 +58,37 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-        // Validar los datos de entrada
         $request->validate([
             'email' => 'required|email',
             'contrasena' => 'required|min:8',
         ]);
 
-        // Buscar al usuario por email
         $user = Usuario::where('email', $request->email)->first();
 
-        // Verificar si el usuario existe y la contraseña es correcta
-        if (!$user || $user->contrasena !== $request->contrasena) { // Comparar directamente
+        if (!$user || $user->contrasena !== $request->contrasena) { 
             return response()->json([
                 'message' => 'Credenciales inválidas',
             ], 401);
         }
 
+        // Generar un token para el usuario autenticado
+        $token = $user->createToken('auth_token')->plainTextToken;
+
         return response()->json([
-            'message' => 'Estas logeado',
+            'message' => 'Inicio de sesión exitoso',
+            'token' => $token,
             'token_type' => 'Bearer',
         ]);
     }
 
-
+/*
     public function userProfile(Request $request)
-{
-    return response()->json([
-        'message' => 'Perfil del usuario obtenido exitosamente',
-        'userData' => auth()->user(),
-    ], 200);
-}
+    {
+        return response()->json([
+            'message' => 'Perfil del usuario obtenido exitosamente',
+            'userData' => auth()->user(),
+        ], 200);
+    }
 
     public function logout(Request $request) {
         
@@ -89,7 +96,6 @@ class AuthController extends Controller
 
     public function allUsers(Request $request) {
         
-    }
+    }*/
 
-    //todo: error en auth->user() porque hace falta configurar sanctum para la autenticacion
 }

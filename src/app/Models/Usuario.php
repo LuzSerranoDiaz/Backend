@@ -7,11 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 class Usuario extends Model
 {
    /** @use HasFactory<\Database\Factories\UserFactory> */
-   use HasFactory, Notifiable;
+   use HasFactory, Notifiable, HasApiTokens;
 
    /**
     * The attributes that are mass assignable.
@@ -35,7 +36,7 @@ class Usuario extends Model
     * @var list<string>
     */
    protected $hidden = [
-       
+       'contrasena',
    ];
 
    /**
