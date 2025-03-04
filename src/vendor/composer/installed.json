@@ -2048,6 +2048,7 @@
             "install-path": "../laravel/sail"
         },
         {
+<<<<<<< HEAD
             "name": "laravel/sanctum",
             "version": "v4.0.8",
             "version_normalized": "4.0.8.0",
@@ -2115,6 +2116,8 @@
             "install-path": "../laravel/sanctum"
         },
         {
+=======
+>>>>>>> e984fb676d7f49ba1bb0606ddde4469d5b22f729
             "name": "laravel/serializable-closure",
             "version": "v2.0.3",
             "version_normalized": "2.0.3.0",

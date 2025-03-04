@@ -14,7 +14,10 @@ namespace Composer;
 
 $GLOBALS['_composer_bin_dir'] = __DIR__;
 $GLOBALS['_composer_autoload_path'] = __DIR__ . '/..'.'/autoload.php';
+<<<<<<< HEAD
 $GLOBALS['__PHPUNIT_ISOLATION_EXCLUDE_LIST'] = $GLOBALS['__PHPUNIT_ISOLATION_BLACKLIST'] = array(realpath(__DIR__ . '/..'.'/phpunit/phpunit/phpunit'));
+=======
+>>>>>>> e984fb676d7f49ba1bb0606ddde4469d5b22f729
 
 if (PHP_VERSION_ID < 80000) {
     if (!class_exists('Composer\BinProxyWrapper')) {
@@ -32,7 +35,11 @@ if (PHP_VERSION_ID < 80000) {
                 // get rid of phpvfscomposer:// prefix for __FILE__ & __DIR__ resolution
                 $opened_path = substr($path, 17);
                 $this->realpath = realpath($opened_path) ?: $opened_path;
+<<<<<<< HEAD
                 $opened_path = 'phpvfscomposer://'.$this->realpath;
+=======
+                $opened_path = $this->realpath;
+>>>>>>> e984fb676d7f49ba1bb0606ddde4469d5b22f729
                 $this->handle = fopen($this->realpath, $mode);
                 $this->position = 0;
 
@@ -46,8 +53,11 @@ if (PHP_VERSION_ID < 80000) {
                 if ($this->position === 0) {
                     $data = preg_replace('{^#!.*\r?\n}', '', $data);
                 }
+<<<<<<< HEAD
                 $data = str_replace('__DIR__', var_export(dirname($this->realpath), true), $data);
                 $data = str_replace('__FILE__', var_export($this->realpath, true), $data);
+=======
+>>>>>>> e984fb676d7f49ba1bb0606ddde4469d5b22f729
 
                 $this->position += strlen($data);
 

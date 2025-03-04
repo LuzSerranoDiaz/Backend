@@ -6,6 +6,7 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+<<<<<<< HEAD
     'App\\Http\\Controllers\\Api\\AuthController' => $baseDir . '/app/Http/Controllers/Api/AuthController.php',
     'App\\Http\\Controllers\\Controller' => $baseDir . '/app/Http/Controllers/Controller.php',
     'App\\Models\\Cita' => $baseDir . '/app/Models/Cita.php',
@@ -14,6 +15,10 @@ return array(
     'App\\Models\\Empleado' => $baseDir . '/app/Models/Empleado.php',
     'App\\Models\\Servicio' => $baseDir . '/app/Models/Servicio.php',
     'App\\Models\\Usuario' => $baseDir . '/app/Models/Usuario.php',
+=======
+    'App\\Http\\Controllers\\Controller' => $baseDir . '/app/Http/Controllers/Controller.php',
+    'App\\Models\\User' => $baseDir . '/app/Models/User.php',
+>>>>>>> e984fb676d7f49ba1bb0606ddde4469d5b22f729
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',
     'Attribute' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
     'Brick\\Math\\BigDecimal' => $vendorDir . '/brick/math/src/BigDecimal.php',
@@ -132,6 +137,7 @@ return array(
     'Cron\\HoursField' => $vendorDir . '/dragonmantank/cron-expression/src/Cron/HoursField.php',
     'Cron\\MinutesField' => $vendorDir . '/dragonmantank/cron-expression/src/Cron/MinutesField.php',
     'Cron\\MonthField' => $vendorDir . '/dragonmantank/cron-expression/src/Cron/MonthField.php',
+<<<<<<< HEAD
     'Database\\Factories\\CitaFactory' => $baseDir . '/database/factories/CitaFactory.php',
     'Database\\Factories\\ClienteFactory' => $baseDir . '/database/factories/ClienteFactory.php',
     'Database\\Factories\\ContratoFactory' => $baseDir . '/database/factories/ContratoFactory.php',
@@ -140,6 +146,10 @@ return array(
     'Database\\Factories\\UsuarioFactory' => $baseDir . '/database/factories/UsuarioFactory.php',
     'Database\\Seeders\\DatabaseSeeder' => $baseDir . '/database/seeders/DatabaseSeeder.php',
     'Database\\Seeders\\UsuarioPruebaSeeder' => $baseDir . '/database/seeders/UsuarioPruebaSeeder.php',
+=======
+    'Database\\Factories\\UserFactory' => $baseDir . '/database/factories/UserFactory.php',
+    'Database\\Seeders\\DatabaseSeeder' => $baseDir . '/database/seeders/DatabaseSeeder.php',
+>>>>>>> e984fb676d7f49ba1bb0606ddde4469d5b22f729
     'DateError' => $vendorDir . '/symfony/polyfill-php83/Resources/stubs/DateError.php',
     'DateException' => $vendorDir . '/symfony/polyfill-php83/Resources/stubs/DateException.php',
     'DateInvalidOperationException' => $vendorDir . '/symfony/polyfill-php83/Resources/stubs/DateInvalidOperationException.php',
@@ -2471,6 +2481,7 @@ return array(
     'Laravel\\Sail\\Console\\InstallCommand' => $vendorDir . '/laravel/sail/src/Console/InstallCommand.php',
     'Laravel\\Sail\\Console\\PublishCommand' => $vendorDir . '/laravel/sail/src/Console/PublishCommand.php',
     'Laravel\\Sail\\SailServiceProvider' => $vendorDir . '/laravel/sail/src/SailServiceProvider.php',
+<<<<<<< HEAD
     'Laravel\\Sanctum\\Console\\Commands\\PruneExpired' => $vendorDir . '/laravel/sanctum/src/Console/Commands/PruneExpired.php',
     'Laravel\\Sanctum\\Contracts\\HasAbilities' => $vendorDir . '/laravel/sanctum/src/Contracts/HasAbilities.php',
     'Laravel\\Sanctum\\Contracts\\HasApiTokens' => $vendorDir . '/laravel/sanctum/src/Contracts/HasApiTokens.php',
@@ -2491,6 +2502,8 @@ return array(
     'Laravel\\Sanctum\\Sanctum' => $vendorDir . '/laravel/sanctum/src/Sanctum.php',
     'Laravel\\Sanctum\\SanctumServiceProvider' => $vendorDir . '/laravel/sanctum/src/SanctumServiceProvider.php',
     'Laravel\\Sanctum\\TransientToken' => $vendorDir . '/laravel/sanctum/src/TransientToken.php',
+=======
+>>>>>>> e984fb676d7f49ba1bb0606ddde4469d5b22f729
     'Laravel\\SerializableClosure\\Contracts\\Serializable' => $vendorDir . '/laravel/serializable-closure/src/Contracts/Serializable.php',
     'Laravel\\SerializableClosure\\Contracts\\Signer' => $vendorDir . '/laravel/serializable-closure/src/Contracts/Signer.php',
     'Laravel\\SerializableClosure\\Exceptions\\InvalidSignatureException' => $vendorDir . '/laravel/serializable-closure/src/Exceptions/InvalidSignatureException.php',
