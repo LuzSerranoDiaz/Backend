@@ -3,19 +3,21 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Cliente extends Model
 {
+
     /**
-     * Get the usuario associated with the Cliente
+     * Get the usuario that owns the Cliente
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function usuario(): HasOne
+    public function usuario(): BelongsTo
     {
-        return $this->hasOne(Usuario::class);
+        return $this->belongsTo(Usuario::class);
     }
     /**
      * Get all of the citas for the Cliente
@@ -36,4 +38,3 @@ class Cliente extends Model
         return $this->hasMany(Contrato::class);
     }
 }
- 

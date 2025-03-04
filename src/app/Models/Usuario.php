@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Notifications\Notifiable;
 
 class Usuario extends Model
@@ -34,23 +35,23 @@ class Usuario extends Model
    ];
 
    /**
-    * Get the empleado that owns the Usuario
+    * Get the empleado associated with the Usuario
     *
-    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+    * @return \Illuminate\Database\Eloquent\Relations\HasOne
     */
-   public function empleado(): BelongsTo
+   public function empleado(): HasOne
    {
-       return $this->belongsTo(Empleado::class);
+       return $this->hasOne(Empleado::class);
    }
 
    /**
-    * Get the cliente that owns the Usuario
+    * Get the cliente associated with the Usuario
     *
-    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+    * @return \Illuminate\Database\Eloquent\Relations\HasOne
     */
-   public function cliente(): BelongsTo
+   public function cliente(): HasOne
    {
-       return $this->belongsTo(Cliente::class);
+       return $this->hasOne(Cliente::class);
    }
 
    /**
