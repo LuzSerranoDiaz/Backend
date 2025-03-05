@@ -9,6 +9,7 @@ return array(
     'App\\Http\\Controllers\\Api\\AuthController' => $baseDir . '/app/Http/Controllers/Api/AuthController.php',
     'App\\Http\\Controllers\\Auth\\LoginController' => $baseDir . '/app/Http/Controllers/Auth/LoginController.php',
     'App\\Http\\Controllers\\Controller' => $baseDir . '/app/Http/Controllers/Controller.php',
+    'App\\Http\\Controllers\\PageController' => $baseDir . '/app/Http/Controllers/PageController.php',
     'App\\Models\\Cita' => $baseDir . '/app/Models/Cita.php',
     'App\\Models\\CitaServicio' => $baseDir . '/app/Models/CitaServicio.php',
     'App\\Models\\Cliente' => $baseDir . '/app/Models/Cliente.php',
