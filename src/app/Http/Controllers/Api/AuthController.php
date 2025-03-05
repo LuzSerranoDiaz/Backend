@@ -81,6 +81,7 @@ class AuthController extends Controller
             'token' => $token,
             'token_type' => 'Bearer',
         ]);
+        
     }
     
     /**
@@ -91,6 +92,33 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'Has salido de la cuenta',
         ], 200);
+    }
+
+    /**
+     * Obtener credenciales de un usuario autenticado
+     */
+    public function getUser(Request $request) {
+        // Verifica si el usuario está autenticado
+        if (Auth::check()) {
+            // Obtén el usuario autenticado
+            $user = Auth::user();
+
+            // Obtén el token actual del usuario
+            $token = $request->bearerToken();
+
+            // Retorna los datos del usuario en formato JSON
+            return response()->json([
+                'success' => true,
+                'user' => $user,
+                'token' => $token
+            ], 200);
+        }
+
+        // Si no está autenticado, retorna un error
+        return response()->json([
+            'success' => false,
+            'message' => 'Usuario no autenticado'
+        ], 401);
     }
 
     /*
