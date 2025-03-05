@@ -2,3 +2,7 @@ mysql/
 mysql/*.*
 mysql/*
 mysql/.*
+.env
+.env.example
+storage/
+vendor/
