@@ -594,9 +594,15 @@ class ComposerStaticInite08334651ce0b12e409af9e125ee397d
 
     public static $classMap = array (
         'App\\Http\\Controllers\\Api\\AuthController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/AuthController.php',
-        'App\\Http\\Controllers\\Auth\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/LoginController.php',
+        'App\\Http\\Controllers\\AppointmentController' => __DIR__ . '/../..' . '/app/Http/Controllers/AppointmentController.php',
+        'App\\Http\\Controllers\\ContractController' => __DIR__ . '/../..' . '/app/Http/Controllers/ContractController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
+        'App\\Http\\Controllers\\CustomerController' => __DIR__ . '/../..' . '/app/Http/Controllers/CustomerController.php',
+        'App\\Http\\Controllers\\EmployeeController' => __DIR__ . '/../..' . '/app/Http/Controllers/EmployeeController.php',
+        'App\\Http\\Controllers\\EmployeeSpecialtyController' => __DIR__ . '/../..' . '/app/Http/Controllers/EmployeeSpecialtyController.php',
         'App\\Http\\Controllers\\PageController' => __DIR__ . '/../..' . '/app/Http/Controllers/PageController.php',
+        'App\\Http\\Controllers\\ServiceController' => __DIR__ . '/../..' . '/app/Http/Controllers/ServiceController.php',
+        'App\\Http\\Controllers\\SpecialtyController' => __DIR__ . '/../..' . '/app/Http/Controllers/SpecialtyController.php',
         'App\\Models\\Cita' => __DIR__ . '/../..' . '/app/Models/Cita.php',
         'App\\Models\\CitaServicio' => __DIR__ . '/../..' . '/app/Models/CitaServicio.php',
         'App\\Models\\Cliente' => __DIR__ . '/../..' . '/app/Models/Cliente.php',
