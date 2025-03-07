@@ -19,11 +19,20 @@ Route::get('/contacto', [PageController::class, 'contacto'])->name('contacto');
 Route::get('/portada', [PageController::class, 'portada'])->name('portada');
 
 // Rutas registro y login
+//Route::post('register', [AuthController::class, 'register']);
+//Route::post('login', [AuthController::class, 'login']);
+// Ruta logout con middleware
+//Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+// Ruta para obtener los datos y un usuario autenticado
+// Route::get('getUser', [AuthController::class, 'getUser'])->middleware('auth:sanctum');
+
+Route::get('/csrf-token', function () {
+    return response()->json(['csrf_token' => csrf_token()]);
+});
+
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
-// Ruta logout con middleware
 Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
-// Ruta para obtener los datos y un usuario autenticado
 Route::get('getUser', [AuthController::class, 'getUser'])->middleware('auth:sanctum');
 
 // Clientes
