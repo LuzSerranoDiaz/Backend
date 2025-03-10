@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('email')->unique();
             $table->string('contrasena');
-            $table->string('confirmar_contrasena');
             $table->string('nombre');
             $table->string('nombreUsuario');
             $table->rememberToken();

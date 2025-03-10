@@ -23,7 +23,6 @@ class UsuarioFactory extends Factory
         return [
             'email' => fake()->unique()->safeEmail(),
             'contrasena' => $contrasena,
-            'confirmar_contrasena' => $contrasena,
             'nombre' => fake()->name(),
             'nombreUsuario' => fake()->lastName(),
             'remember_token' => Str::random(10),
