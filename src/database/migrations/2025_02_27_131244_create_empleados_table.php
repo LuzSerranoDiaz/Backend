@@ -14,6 +14,12 @@ return new class extends Migration
         Schema::create('empleados', function (Blueprint $table) {
             $table->id();
             $table->foreignId('usuario_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->string('nombre');
+            $table->string('apellidos');
+            $table->string('tlf');
+            $table->string('direccion');
+            $table->string('municipio');
+            $table->string('provincia');
             $table->integer('anos_experiencia');
             $table->timestamps();
         });
