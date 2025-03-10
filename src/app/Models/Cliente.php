@@ -13,8 +13,15 @@ class Cliente extends Model
 {
     use HasFactory, Notifiable;
 
-    protected $fillable = ['usuario_id', 'DNI'];
-    
+    protected $fillable = [
+        'usuario_id',
+        'DNI',
+        'tlf',
+        'direccion',
+        'municipio',
+        'provincia',
+    ];
+
     /**
      * Get the usuario that owns the Cliente
      *

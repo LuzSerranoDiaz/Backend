@@ -14,12 +14,13 @@ class CustomerController extends Controller
     /**
      * Añade un cliente y un usuario asociado
      * 
-     * Problema: le tengo que añadir tambien la contrasena
+     * todo: le tengo que añadir tambien la contrasena
      */
     public function add(Request $request) {
         $validatedData = $request->validate([
             'usuario.nombre' => 'required|string|max:255',
-            'usuario.apellidos' => 'required|string|max:255',
+            'nombreUsuario' => 'required|string|max:255',
+            'apellidos' => 'required|string|max:255',
             'usuario.email' => 'required|email|unique:usuarios,email',
             'usuario.tlf' => 'required|string|max:20',
             'usuario.direccion' => 'required|string|max:255',
@@ -31,21 +32,23 @@ class CustomerController extends Controller
 
         $usuario = Usuario::create([
             'nombre' => $validatedData['usuario']['nombre'],
-            'apellidos' => $validatedData['usuario']['apellidos'],
+            'nombreUsuario' => $validatedData['usuario']['nombreUsuario'],
             'email' => $validatedData['usuario']['email'],
-            'tlf' => $validatedData['usuario']['tlf'],
-            'direccion' => $validatedData['usuario']['direccion'],
-            'municipio' => $validatedData['usuario']['municipio'],
-            'provincia' => $validatedData['usuario']['provincia'],
             'contrasena' => $validatedData['usuario']['contrasena'],
         ]);
 
         $cliente = Cliente::create([
             'usuario_id' => $usuario->id,
+            'apellidos' => $validatedData['usuario']['apellidos'],
+            'tlf' => $validatedData['usuario']['tlf'],
+            'direccion' => $validatedData['usuario']['direccion'],
+            'municipio' => $validatedData['usuario']['municipio'],
+            'provincia' => $validatedData['usuario']['provincia'],
             'DNI' => $validatedData['DNI'],
         ]);
 
-        return response()->json($cliente->load('usuario'), 201);
+        return response()->json(['message' => $validatedData['usuario']['nombreUsuario']]);
+        //return response()->json($cliente->load('usuario'), 201);
     }
 
     /**
