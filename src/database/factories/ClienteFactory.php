@@ -23,6 +23,10 @@ class ClienteFactory extends Factory
         return [
             'usuario_id' => fake()->randomElement($usuario_id),
             'DNI' => Str::random(9),
+            'tlf' => fake()->unique()->phoneNumber(),
+            'direccion' => fake()->address(),
+            'municipio' => fake()->city(),
+            'provincia' => fake()->country(), // Country ya que no hay especifico para provincia 
         ];
     }
 }
