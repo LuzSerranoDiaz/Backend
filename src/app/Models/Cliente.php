@@ -15,13 +15,14 @@ class Cliente extends Model
 
     protected $fillable = [
         'usuario_id',
-        'DNI',
+        'apellidos',
         'tlf',
         'direccion',
         'municipio',
-        'provincia',
+        'provincia', 
+        'DNI'
     ];
-
+    
     /**
      * Get the usuario that owns the Cliente
      *

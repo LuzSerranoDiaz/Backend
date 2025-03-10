@@ -10,6 +10,7 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SpecialtyController;
 use App\Http\Controllers\EmployeeSpecialtyController;
 use App\Http\Controllers\ContractController;
+use App\Http\Controllers\ProfileController;
 
 Route::get('/', [PageController::class, 'index'])->name('index');
 Route::get('/acerca-de', [PageController::class, 'acercaDe'])->name('acerca-de');
@@ -31,6 +32,11 @@ Route::post('login', [AuthController::class, 'login']);
 Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 // Ruta para obtener los datos y un usuario autenticado
 Route::get('getUser', [AuthController::class, 'getUser'])->middleware('auth:sanctum');
+
+// Perfil Usuario
+Route::post('profile', [ProfileController::class, 'add'])->middleware('auth:sanctum');
+Route::put('profile', [ProfileController::class, 'update'])->middleware('auth:sanctum');
+
 
 // Clientes
 Route::post('customers', [CustomerController::class, 'add']);

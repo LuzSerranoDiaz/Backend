@@ -21,25 +21,17 @@ class AuthController extends Controller
         // Validar los datos de entrada
         $validatedData = $request->validate([
             'nombre' => 'required|string|max:255',
-            'apellidos' => 'required|string|max:255',
+            'nombreUsuario' => 'required|string|max:255|unique:usuarios,nombreUsuario', 
             'email' => 'required|email|unique:usuarios,email',
             'contrasena' => 'required|string|min:8|confirmed', // 'confirmed' requiere un campo 'contrasena_confirmation'
-            'tlf' => 'required|string|max:15',
-            'direccion' => 'required|string|max:255',
-            'municipio' => 'required|string|max:255',
-            'provincia' => 'required|string|max:255',
         ]);
 
         // Crear el usuario con la contraseña encriptada
         $usuario = Usuario::create([
             'nombre' => $validatedData['nombre'],
-            'apellidos' => $validatedData['apellidos'],
+            'nombreUsuario' => $validatedData['nombreUsuario'],
             'email' => $validatedData['email'],
-            'contrasena' => $validatedData['contrasena'],
-            'tlf' => $validatedData['tlf'],
-            'direccion' => $validatedData['direccion'],
-            'municipio' => $validatedData['municipio'],
-            'provincia' => $validatedData['provincia'],
+            'contrasena' => $validatedData['contrasena'], //bcrypt($validatedData['contrasena']), 
         ]);
 
         // Generar un token de acceso personal
@@ -50,6 +42,8 @@ class AuthController extends Controller
             'message' => 'Usuario registrado exitosamente',
             'access_token' => $token,
             'token_type' => 'Bearer',
+            'nombre' => $usuario->nombre,
+            'nombreUsuario' => $usuario->nombreUsuario,
             'email' => $usuario->email,
             'contrasena' => $validatedData['contrasena'], 
         ], 201);
@@ -120,33 +114,5 @@ class AuthController extends Controller
             'message' => 'Usuario no autenticado'
         ], 401);
     }
-
-    /*
-    public function validarEmail(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|email',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'message' => 'El correo proporcionado no es válido.',
-                'errors' => $validator->errors(),
-            ], 400);
-        }
-
-        $user = Usuario::where('email', $request->email)->first();
-
-        if (!$user) {
-            return response()->json([
-                'message' => 'El correo no está registrado.',
-            ], 404);
-        }
-
-        return response()->json([
-            'message' => 'El correo es válido y está registrado.',
-        ], 200);
-    }*/
-
 
 }
