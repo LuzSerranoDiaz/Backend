@@ -179,11 +179,7 @@ class CustomerController extends Controller
 
         $validatedData = $request->validate([
             'usuario_id' => 'sometimes|exists:usuarios,id',
-<<<<<<< HEAD
             'DNI' => 'sometimes|required|string|size:9|unique:clientes,DNI|regex:/^\d{8}[A-Z]$/',
-=======
-            'DNI' => 'sometimes|string|nullable|max:20|unique:clientes,DNI,' . $id,
->>>>>>> 1b9f0275c697e4b09ffe83bd97e64d694499c5d8
             'nombre' => 'sometimes|string|max:255',
             'nombreUsuario' => 'sometimes|unique:usuarios,nombreUsuario|string|max:255',
             'apellidos' => 'sometimes|string|max:255',
