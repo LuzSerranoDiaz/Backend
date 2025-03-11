@@ -18,36 +18,37 @@ class CustomerController extends Controller
      */
     public function add(Request $request) {
         $validatedData = $request->validate([
-            'usuario.nombre' => 'required|string|max:255',
+            'nombre' => 'required|string|max:255',
             'nombreUsuario' => 'required|string|max:255',
             'apellidos' => 'required|string|max:255',
-            'usuario.email' => 'required|email|unique:usuarios,email',
-            'usuario.tlf' => 'required|string|max:20',
-            'usuario.direccion' => 'required|string|max:255',
-            'usuario.municipio' => 'required|string|max:255',
-            'usuario.provincia' => 'required|string|max:255',
-            'usuario.contrasena' => 'required|string|min:8',
+            'email' => 'required|email|unique:usuarios,email',
+            'tlf' => 'required|string|max:20',
+            'direccion' => 'required|string|max:255',
+            'municipio' => 'required|string|max:255',
+            'provincia' => 'required|string|max:255',
+            'contrasena' => 'required|string|min:8',
             'DNI' => 'required|string|max:20|unique:clientes,DNI',
         ]);
 
         $usuario = Usuario::create([
-            'nombre' => $validatedData['usuario']['nombre'],
-            'nombreUsuario' => $validatedData['usuario']['nombreUsuario'],
-            'email' => $validatedData['usuario']['email'],
-            'contrasena' => $validatedData['usuario']['contrasena'],
+            'nombre' => $validatedData['nombre'],
+            'nombreUsuario' => $validatedData['nombreUsuario'],
+            'email' => $validatedData['email'],
+            'contrasena' => $validatedData['contrasena'],
         ]);
 
         $cliente = Cliente::create([
             'usuario_id' => $usuario->id,
-            'apellidos' => $validatedData['usuario']['apellidos'],
-            'tlf' => $validatedData['usuario']['tlf'],
-            'direccion' => $validatedData['usuario']['direccion'],
-            'municipio' => $validatedData['usuario']['municipio'],
-            'provincia' => $validatedData['usuario']['provincia'],
+            'apellidos' => $validatedData['apellidos'],
+            'tlf' => $validatedData['tlf'],
+            'direccion' => $validatedData['direccion'],
+            'municipio' => $validatedData['municipio'],
+            'provincia' => $validatedData['provincia'],
             'DNI' => $validatedData['DNI'],
         ]);
+        return response()->json(['message' => 'aaaaaaaaaaaaaaaaaaaa']/* $cliente->load('usuario') */, 200);
 
-        return response()->json($cliente, 201);
+        //return response()->json($cliente, 201);
     }
 
     /**
@@ -77,6 +78,7 @@ class CustomerController extends Controller
      */
     public function update(Request $request, $id) {
         $cliente = Cliente::find($id);
+        $usuario = Usuario::find($cliente->usuario_id);
 
         if (!$cliente) {
             return response()->json(['message' => 'Cliente no encontrado'], 404);
@@ -85,22 +87,19 @@ class CustomerController extends Controller
         $validatedData = $request->validate([
             'usuario_id' => 'sometimes|exists:usuarios,id',
             'DNI' => 'sometimes|string|max:20|unique:clientes,DNI,' . $id,
-            'usuario.nombre' => 'sometimes|string|max:255',
+            'nombre' => 'sometimes|string|max:255',
             'nombreUsuario' => 'sometimes|string|max:255',
-            'usuario.apellidos' => 'sometimes|string|max:255',
-            'usuario.email' => 'sometimes|email|unique:usuarios,email,' . $cliente->usuario_id,
-            'usuario.tlf' => 'sometimes|string|max:20',
-            'usuario.direccion' => 'sometimes|string|max:255',
-            'usuario.municipio' => 'sometimes|string|max:255',
-            'usuario.provincia' => 'sometimes|string|max:255',
+            'apellidos' => 'sometimes|string|max:255',
+            'email' => 'sometimes|email|unique:usuarios,email,' . $cliente->usuario_id,
+            'tlf' => 'sometimes|string|max:20',
+            'direccion' => 'sometimes|string|max:255',
+            'municipio' => 'sometimes|string|max:255',
+            'provincia' => 'sometimes|string|max:255',
+            'contrasena' => 'sometimes|string|min:8',    
         ]);
 
         $cliente->update($validatedData);
-
-        if ($request->has('usuario')) {
-            $usuarioData = $request->input('usuario');
-            $cliente->usuario->update($usuarioData);
-        }
+        $usuario->update($validatedData);
 
         return response()->json($cliente->load('usuario'), 200);
     }
@@ -110,13 +109,15 @@ class CustomerController extends Controller
      */
     public function delete($id) {
         $cliente = Cliente::find($id);
+        $usuario = Usuario::find($cliente->usuario_id);
 
         if (!$cliente) {
             return response()->json(['message' => 'Cliente no encontrado'], 404);
         }
 
         $cliente->delete();
-
+        $usuario->delete();
+        
         return response()->json(['message' => 'Cliente eliminado correctamente'], 200);
     }
 }
