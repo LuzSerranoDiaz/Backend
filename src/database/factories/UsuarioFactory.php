@@ -19,16 +19,12 @@ class UsuarioFactory extends Factory
      */
     public function definition(): array
     {
-
+        $contrasena = static::$password ??= Hash::make('password');
         return [
             'email' => fake()->unique()->safeEmail(),
-            'contrasena' => static::$password ??= Hash::make('password'),
+            'contrasena' => $contrasena,
             'nombre' => fake()->name(),
-            'apellidos' => fake()->lastName(),
-            'tlf' => fake()->unique()->phoneNumber(),
-            'direccion' => fake()->address(),
-            'municipio' => fake()->city(),
-            'provincia' => fake()->country(), // Country ya que no hay especifico para provincia 
+            'nombreUsuario' => fake()->lastName(),
             'remember_token' => Str::random(10),
         ];
     }

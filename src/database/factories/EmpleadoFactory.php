@@ -24,6 +24,10 @@ class EmpleadoFactory extends Factory
         return [
             'usuario_id' => fake()->randomElement($usuario_id),
             'anos_experiencia' => random_int(0, 10),
+            'tlf' => fake()->unique()->phoneNumber(),
+            'direccion' => fake()->address(),
+            'municipio' => fake()->city(),
+            'provincia' => fake()->country(), // Country ya que no hay especifico para provincia 
         ];
     }
 }

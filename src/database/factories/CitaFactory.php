@@ -23,7 +23,8 @@ class CitaFactory extends Factory
     {
         $cliente_id = Cliente::pluck('id')->toArray();
         $empleado_id = Empleado::pluck('id')->toArray();
-        $contrato = DB::table('contratos')->where('cliente_id', '=', $cliente_id)->get(); 
+        $contrato = Contrato::where('cliente_id', '=', $cliente_id)->get();
+        //$contrato = DB::table('contratos')->where('cliente_id', '=', $cliente_id)->get(); 
         $contrato_id = $contrato->pluck('id')->toArray();
         $contrato_atenciones = $contrato->pluck('numero_de_atenciones_realizadas')->toArray();
         //Contrato::where('cliente_id' = $cliente_id)->pluck('id')->toArray();
