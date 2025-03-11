@@ -40,6 +40,7 @@ class AuthController extends Controller
         // Respuesta exitosa con el token
         return response()->json([
             'message' => 'Usuario registrado exitosamente',
+            'message' => 'Datos de Usuario registrado: ',
             'access_token' => $token,
             'token_type' => 'Bearer',
             'nombre' => $usuario->nombre,

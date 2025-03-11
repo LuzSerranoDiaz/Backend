@@ -37,7 +37,6 @@ Route::get('getUser', [AuthController::class, 'getUser'])->middleware('auth:sanc
 Route::post('profile', [ProfileController::class, 'add'])->middleware('auth:sanctum');
 Route::put('profile', [ProfileController::class, 'update'])->middleware('auth:sanctum');
 
-
 // Clientes
 Route::post('customers', [CustomerController::class, 'add']);
 Route::get('customers', [CustomerController::class, 'show']);

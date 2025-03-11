@@ -63,7 +63,12 @@ class ProfileController extends Controller
      */
     public function update(Request $request) {
         // Obtener el usuario autenticado
-        $user = Auth::user();
+        $id = Auth::id();
+        $user = Usuario::find($id);
+
+        if (!$user) {
+            return response()->json(['message' => 'Usuario no autenticado'], 401);
+        }
 
         // Validar los datos para el usuario
         $validatedUserData = $request->validate([
@@ -82,10 +87,7 @@ class ProfileController extends Controller
             'DNI' => 'sometimes|required|string|max:9',
         ]);
 
-        // Actualizar los datos del usuario
-        if ($validatedUserData) {
-            $user->update($validatedUserData);
-        }
+        $user->update($validatedUserData);
 
         // Actualizar los datos del cliente
         $cliente = $user->cliente; // Obtener el cliente asociado al usuario
