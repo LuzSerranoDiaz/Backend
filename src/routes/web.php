@@ -75,7 +75,7 @@ Route::delete('services/{id}', [ServiceController::class, 'delete']);
 // Especialidades
 Route::post('specialties', [SpecialtyController::class, 'add']);
 Route::get('specialties', [SpecialtyController::class, 'show']); 
-Route::get('specialties/{id}', [SpecialtyController::class, 'getSpeciality']); 
+Route::get('specialties/{id}', [SpecialtyController::class, 'getSpecialty']); 
 Route::put('specialties/{id}', [SpecialtyController::class, 'update']); 
 Route::delete('specialties/{id}', [SpecialtyController::class, 'delete']); 
 
