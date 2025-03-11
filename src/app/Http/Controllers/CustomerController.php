@@ -131,7 +131,7 @@ class CustomerController extends Controller
         ]);
 
         if ($validatedData['DNI'] == "") {
-            $validatedData['DNI'] = $empleado->DNI;
+            $validatedData['DNI'] = $cliente->DNI;
         }
 
         $cliente->update($validatedData);
