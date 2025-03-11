@@ -55,6 +55,7 @@ Route::delete('contracts/{contractId}', [ContractController::class, 'delete']);
 
 //Empleados
 Route::post('employees', [EmployeeController::class, 'add']); 
+Route::post('{id}/employees', [EmployeeController::class, 'addEmployee']); 
 Route::get('employees', [EmployeeController::class, 'show']); 
 Route::get('employees/{id}', [EmployeeController::class, 'getEmployee']); 
 Route::put('employees/{id}', [EmployeeController::class, 'update']);

@@ -13,11 +13,6 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 class ContractController extends Controller
 {
 
-    /*      Route::post('customers/{id}/contracts', [ContractController::class, 'add']);
-            Route::get('customers/{id}/contracts', [ContractController::class, 'show']);
-            Route::get('customers/{id}/contracts/{contractId}', [ContractController::class, 'getContract']);
-            Route::put('customers/{id}/contracts/{contractId}', [ContractController::class, 'update']);
-            Route::delete('customers/{id}/contracts/{contractId}', [ContractController::class, 'delete']); */
     /**
      * Añade un contrato a un cliente
      */
