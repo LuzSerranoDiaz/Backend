@@ -25,7 +25,7 @@ class ProfileController extends Controller
         // Validar los datos de entrada
         $validatedData = $request->validate([
             'apellidos' => 'required|string|max:255',
-            'tlf' => 'required|digits_between:9,15|regex:/^\+?\d+$/',
+            'tlf' => 'required|unique:clientes,tlf|digits_between:9,15|regex:/^\+?\d+$/',
             'direccion' => 'required|string|max:255',
             'municipio' => 'required|string|max:255',
             'provincia' => 'required|string|max:255',
@@ -34,9 +34,10 @@ class ProfileController extends Controller
             'apellidos.string' => 'Los apellidos deben ser una cadena de texto.',
             'apellidos.required' => 'Los apellidos son obligatorios.',
 
-            'tlf.digits_between' => 'El número de teléfono tiene que ser una cadena de dígitos.' ,
+            'tlf.digits_between' => 'El número de teléfono tiene que ser una cadena entre 9 y 15 dígitos.' ,
             'tlf.required' => 'El número de teléfono es obligatorio',
             'tlf.regex' => 'El número de teléfono sólo puede tener números y opcionalmente +.',
+            'tlf.unique' => 'Este número de teléfono ya esta en uso.',
 
             'direccion.string' => 'La direccion debe ser una cadena de texto.',
             'direccion.required' => 'La direccion es obligatorio.',
@@ -96,6 +97,7 @@ class ProfileController extends Controller
             'nombre' => 'sometimes|required|string|max:255',
             'nombreUsuario' => 'sometimes|required|string|max:255|unique:usuarios,nombreUsuario,' . $user->id,
             'email' => 'sometimes|required|email|unique:usuarios,email,' . $user->id,
+            'contrasena' => 'sometimes|string|min:8|confirmed',
         ], [
             'nombre.string' => 'El nombre tiene que ser una cadena de texto.',
 
@@ -103,12 +105,15 @@ class ProfileController extends Controller
 
             'email.email' => 'El email debe ser una dirección válida.',
             'email.unique' => 'El email ya está en uso.',
+            
+            'contrasena.min' => 'La contraseña tiene que tener al menos 8 caracteres.',
+            'contrasena.confirmed' => 'Las contraseñas deben ser iguales'
         ]);
 
         // Validar los datos para el cliente
         $validatedClientData = $request->validate([
             'apellidos' => 'sometimes|required|string|max:255',
-            'tlf' => 'sometimes|required|digits_between:9,15|regex:/^\+?\d+$/',
+            'tlf' => 'sometimes|required|unique:clientes,tlf|digits_between:9,15|regex:/^\+?\d+$/',
             'direccion' => 'sometimes|required|string|max:255',
             'municipio' => 'sometimes|required|string|max:255',
             'provincia' => 'sometimes|required|string|max:255',
@@ -118,6 +123,7 @@ class ProfileController extends Controller
 
             'tlf.digits_between' => 'El número de teléfono tiene que ser una cadena de dígitos entre 9 y 15.' ,
             'tlf.regex' => 'El número de teléfono sólo puede tener números y opcionalmente +.',
+            'tlf.unique' => 'Este número de teléfono ya esta en uso.',
 
             'direccion.string' => 'La direccion debe ser una cadena de texto.',
 

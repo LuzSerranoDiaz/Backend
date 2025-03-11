@@ -53,9 +53,23 @@ class SpecialtyController extends Controller
     /**
      * Elimina una especialidad
      */
-    public function delete($id) {
-        $especialidad = Especialidad::findOrFail($id);
-        $especialidad->delete(); 
-        return response()->noContent();
+    public function delete($id)
+    {
+        try {
+            $especialidad = Especialidad::findOrFail($id);
+            
+            $especialidadName = $especialidad->nombre;  
+
+            $especialidad->delete(); 
+            
+            return response()->json([
+                'message' => 'Especialidad eliminada',
+                'especialidad' => $especialidadName
+            ], 200); 
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return response()->json(['message' => 'Especialidad no encontrada'], 404);
+        }
     }
+
+
 }
