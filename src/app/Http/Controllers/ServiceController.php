@@ -11,14 +11,6 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
  */
 class ServiceController extends Controller
 {
-
-    /*     
-        Route::post('services', [ServiceController::class, 'add']);
-        Route::get('services', [ServiceController::class, 'show']); 
-        Route::get('services/{id}', [ServiceController::class, 'getService']); 
-        Route::put('services/{id}', [ServiceController::class, 'update']); 
-        Route::delete('services/{id}', [ServiceController::class, 'delete']);  
-    */
     /**
      * Añade un servicio
      */

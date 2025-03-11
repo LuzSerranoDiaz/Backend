@@ -39,17 +39,19 @@ Route::put('profile', [ProfileController::class, 'update'])->middleware('auth:sa
 
 // Clientes
 Route::post('customers', [CustomerController::class, 'add']);
+Route::post('{id}/customers', [CustomerController::class, 'addClient']);
 Route::get('customers', [CustomerController::class, 'show']);
-Route::get('customer/{id}', [CustomerController::class, 'getCustomer']);
+Route::get('customers/{id}', [CustomerController::class, 'getCustomer']);
 Route::put('customer/{id}', [CustomerController::class, 'update']);
-Route::delete('customer/{id}', [CustomerController::class, 'delete']);
+Route::delete('customers/{id}', [CustomerController::class, 'delete']);
 
 // Rutas para gestionar contratos de un cliente específico
 Route::post('customers/{id}/contracts', [ContractController::class, 'add']);
+Route::get('contracts', [ContractController::class, 'showAll']);
 Route::get('customers/{id}/contracts', [ContractController::class, 'show']);
 Route::get('customers/{id}/contracts/{contractId}', [ContractController::class, 'getContract']);
-Route::put('customers/{id}/contracts/{contractId}', [ContractController::class, 'update']);
-Route::delete('customers/{id}/contracts/{contractId}', [ContractController::class, 'delete']);
+Route::put('contracts/{contractId}', [ContractController::class, 'update']);
+Route::delete('contracts/{contractId}', [ContractController::class, 'delete']);
 
 //Empleados
 Route::post('employees', [EmployeeController::class, 'add']); 
