@@ -118,7 +118,7 @@ class CustomerController extends Controller
 
         $validatedData = $request->validate([
             'usuario_id' => 'sometimes|exists:usuarios,id',
-            'DNI' => 'sometimes|string|max:20|unique:clientes,DNI,' . $id,
+            'DNI' => 'sometimes|string|nullable|max:20|unique:clientes,DNI,' . $id,
             'nombre' => 'sometimes|string|max:255',
             'nombreUsuario' => 'sometimes|string|max:255',
             'apellidos' => 'sometimes|string|max:255',
@@ -129,6 +129,10 @@ class CustomerController extends Controller
             'provincia' => 'sometimes|string|max:255',
             'contrasena' => 'sometimes|string|min:8',
         ]);
+
+        if ($validatedData['DNI'] == "") {
+            $validatedData['DNI'] = $empleado->DNI;
+        }
 
         $cliente->update($validatedData);
         $usuario->update($validatedData);
