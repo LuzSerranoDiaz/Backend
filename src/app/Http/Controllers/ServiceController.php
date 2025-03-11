@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Servicio;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 /**
  * Clase Controlador de Servicios
@@ -13,30 +14,31 @@ class ServiceController extends Controller
     /**
      * Añade un servicio
      */
-    public function add(Request $request) {
+    public function add(Request $request)
+    {
         $validatedData = $request->validate([
-            'servicio.nombre' => 'required|string|max:255',
-            'servicio.descripcion' => 'required|string|max:255',
-            'servicio.duracion' => 'required|integer|max:3',
-            'servicio.precio' => 'required|decimal:2|max:20',
+            'nombre' => 'required|string|max:255',
+            'descripcion' => 'required|string|max:255',
+            'duracion' => 'required|integer',
+            'precio' => 'required|decimal:2|max:20',
         ]);
 
         $servicio = Servicio::create([
-
-            'nombre' => $validatedData['servicio']['nombre'],
-            'descripcion' => $validatedData['servicio']['descripcion'],
-            'duracion' => $validatedData['servicio']['duracion'],
-            'precio' => $validatedData['servicio']['precio'],
+            'nombre' => $validatedData['nombre'],
+            'descripcion' => $validatedData['descripcion'],
+            'duracion' => $validatedData['duracion'],
+            'precio' => $validatedData['precio'],
         ]);
 
-        return response()->json($servicio->load('servicio'), 201);
+        return response()->json($servicio, 201);
     }
 
     /**
      * Muestra los servicios
      */
-    public function show() {
-        $servicios = Servicio::with('servicio')->get();
+    public function show()
+    {
+        $servicios = Servicio::all();
 
         return response()->json($servicios, 200);
     }
@@ -44,10 +46,12 @@ class ServiceController extends Controller
     /**
      * Obtiene un servicio
      */
-    public function getService($id) {
-        $servicio = Servicio::with('servicio')->find($id);
-
-        if (!$servicio) {
+    public function getService($id)
+    {
+        try{
+            $servicio = Servicio::findOrFail($id);
+        }
+        catch (ModelNotFoundException){
             return response()->json(['message' => 'servicio no encontrado'], 404);
         }
 
@@ -57,32 +61,37 @@ class ServiceController extends Controller
     /**
      * Modifica un servicio
      */
-    public function update(Request $request, $id) {
-        $servicio = Servicio::with('servicio')->find($id);
-
-        if (!$servicio) {
+    public function update(Request $request, $id)
+    {
+        try{
+            $servicio = Servicio::findOrFail($id);
+        }
+        catch (ModelNotFoundException){
             return response()->json(['message' => 'servicio no encontrado'], 404);
         }
+        
 
         $validatedData = $request->validate([
-            'servicio_id' => 'sometimes|exists:servicios,id',
-            'servicio.nombre' => 'sometimes|string|max:255',
-            'servicio.descripcion' => 'sometimes|string|max:255',
-            'servicio.duracion' => 'sometimes|integer|max:3',
-            'servicio.precio' => 'sometimes|decimal:2|max:20',
+            'servicio_id' => 'sometimes|exists:servicios,id,' . $id,
+            'nombre' => 'sometimes|string|max:255',
+            'descripcion' => 'sometimes|string|max:255',
+            'duracion' => 'sometimes|integer|',
+            'precio' => 'sometimes|decimal:2|max:20',
         ]);
 
         $servicio->update($validatedData);
 
-        return response()->json($servicio->load('servicio'), 201);
+        return response()->json($servicio, 201);
     }
     /**
      * Elimina un servicio
      */
-    public function delete($id) {
-        $servicio = Servicio::with('servicio')->find($id);
-
-        if (!$servicio) {
+    public function delete($id)
+    {
+        try{
+            $servicio = Servicio::findOrFail($id);
+        }
+        catch (ModelNotFoundException){
             return response()->json(['message' => 'servicio no encontrado'], 404);
         }
 

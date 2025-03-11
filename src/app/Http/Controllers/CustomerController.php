@@ -16,7 +16,8 @@ class CustomerController extends Controller
      * 
      * todo: le tengo que añadir tambien la contrasena
      */
-    public function add(Request $request) {
+    public function add(Request $request)
+    {
         $validatedData = $request->validate([
             'nombre' => 'required|string|max:255',
             'nombreUsuario' => 'required|string|max:255',
@@ -46,15 +47,44 @@ class CustomerController extends Controller
             'provincia' => $validatedData['provincia'],
             'DNI' => $validatedData['DNI'],
         ]);
-        return response()->json(['message' => 'aaaaaaaaaaaaaaaaaaaa']/* $cliente->load('usuario') */, 200);
 
-        //return response()->json($cliente, 201);
+        return response()->json($cliente->load('usuario'), 200);
+    }
+
+    /**
+     * Añade un cliente con un usuario ya creado
+     */
+
+    public function addClient(Request $request, $id)
+    {
+        $validatedData = $request->validate([
+            'apellidos' => 'required|string|max:255',
+            'email' => 'required|email|unique:usuarios,email',
+            'tlf' => 'required|string|max:20',
+            'direccion' => 'required|string|max:255',
+            'municipio' => 'required|string|max:255',
+            'provincia' => 'required|string|max:255',
+            'DNI' => 'required|string|max:20|unique:clientes,DNI',
+        ]);
+
+        $cliente = Cliente::create([
+            'usuario_id' => $id,
+            'apellidos' => $validatedData['apellidos'],
+            'tlf' => $validatedData['tlf'],
+            'direccion' => $validatedData['direccion'],
+            'municipio' => $validatedData['municipio'],
+            'provincia' => $validatedData['provincia'],
+            'DNI' => $validatedData['DNI'],
+        ]);
+
+        return response()->json($cliente->load('usuario'), 200);
     }
 
     /**
      * Muestra los clientes
      */
-    public function show() {
+    public function show()
+    {
         $clientes = Cliente::with('usuario')->get();
 
         return response()->json($clientes, 200);
@@ -63,7 +93,8 @@ class CustomerController extends Controller
     /**
      * Obtiene un cliente
      */
-    public function getCustomer($id) {
+    public function getCustomer($id)
+    {
         $cliente = Cliente::with('usuario')->find($id);
 
         if (!$cliente) {
@@ -76,7 +107,8 @@ class CustomerController extends Controller
     /**
      * Actualiza un cliente y su usuario asociado
      */
-    public function update(Request $request, $id) {
+    public function update(Request $request, $id)
+    {
         $cliente = Cliente::find($id);
         $usuario = Usuario::find($cliente->usuario_id);
 
@@ -95,7 +127,7 @@ class CustomerController extends Controller
             'direccion' => 'sometimes|string|max:255',
             'municipio' => 'sometimes|string|max:255',
             'provincia' => 'sometimes|string|max:255',
-            'contrasena' => 'sometimes|string|min:8',    
+            'contrasena' => 'sometimes|string|min:8',
         ]);
 
         $cliente->update($validatedData);
@@ -107,7 +139,8 @@ class CustomerController extends Controller
     /**
      * Elimina un cliente
      */
-    public function delete($id) {
+    public function delete($id)
+    {
         $cliente = Cliente::find($id);
         $usuario = Usuario::find($cliente->usuario_id);
 
@@ -117,7 +150,7 @@ class CustomerController extends Controller
 
         $cliente->delete();
         $usuario->delete();
-        
+
         return response()->json(['message' => 'Cliente eliminado correctamente'], 200);
     }
 }
