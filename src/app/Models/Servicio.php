@@ -10,6 +10,13 @@ use Illuminate\Notifications\Notifiable;
 class Servicio extends Model
 {
     use HasFactory, Notifiable;
+
+    protected $fillable = [
+        'nombre',
+        'descripcion',
+        'duracion',
+        'precio',
+    ];
  /**
   * The citas that belong to the Servicio
   *
