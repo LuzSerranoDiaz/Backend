@@ -47,8 +47,7 @@ class CustomerController extends Controller
             'DNI' => $validatedData['DNI'],
         ]);
 
-        return response()->json(['message' => $validatedData['usuario']['nombreUsuario']]);
-        //return response()->json($cliente->load('usuario'), 201);
+        return response()->json($cliente, 201);
     }
 
     /**
@@ -87,6 +86,7 @@ class CustomerController extends Controller
             'usuario_id' => 'sometimes|exists:usuarios,id',
             'DNI' => 'sometimes|string|max:20|unique:clientes,DNI,' . $id,
             'usuario.nombre' => 'sometimes|string|max:255',
+            'nombreUsuario' => 'sometimes|string|max:255',
             'usuario.apellidos' => 'sometimes|string|max:255',
             'usuario.email' => 'sometimes|email|unique:usuarios,email,' . $cliente->usuario_id,
             'usuario.tlf' => 'sometimes|string|max:20',

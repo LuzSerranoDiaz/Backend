@@ -23,6 +23,7 @@ class ClienteFactory extends Factory
         return [
             'usuario_id' => fake()->randomElement($usuario_id),
             'DNI' => Str::random(9),
+            'apellidos' => fake()->lastName(),
             'tlf' => fake()->unique()->phoneNumber(),
             'direccion' => fake()->address(),
             'municipio' => fake()->city(),
