@@ -20,7 +20,7 @@ class CustomerController extends Controller
     {
         $validatedData = $request->validate([
             'nombre' => 'required|string|max:255',
-            'nombreUsuario' => 'required|string|max:255',
+            'nombreUsuario' => 'required|string|unique:usuarios,nombreUsuario|max:255',
             'apellidos' => 'required|string|max:255',
             'email' => 'required|email|unique:usuarios,email',
             'tlf' => 'required|unique:clientes,tlf|digits_between:9,15|regex:/^\+?\d+$/',
@@ -35,6 +35,7 @@ class CustomerController extends Controller
 
             'nombreUsuario.required' => 'El nombre de usuario es obligatorio.',
             'nombreUsuario.string' => 'El nombre de usuario tiene que ser una cadena de texto.',
+            'nombre.unique' => 'Este nombre de usuario ya está en uso.',
 
             'apellidos.required' => 'Los apellidos son obligatorios.',
             'apellidos.string' => 'Los apellidos tienen que ser una cadena de texto.',

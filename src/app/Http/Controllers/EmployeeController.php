@@ -18,16 +18,56 @@ class EmployeeController extends Controller
     public function add(Request $request) {
         $validatedData = $request->validate([
             'nombre' => 'required|string|max:255',
-            'nombreUsuario' => 'required|string|max:255',
+            'nombreUsuario' => 'required|string|max:255|unique:usuarios,nombreUsuario',
             'apellidos' => 'required|string|max:255',
             'email' => 'required|email|unique:usuarios,email',
-            'tlf' => 'required|string|max:20',
+            'tlf' => 'required|unique:empleados,tlf|digits_between:9,15|regex:/^\+?\d+$/',
             'direccion' => 'required|string|max:255',
             'municipio' => 'required|string|max:255',
             'provincia' => 'required|string|max:255',
             'contrasena' => 'required|string|min:8',
-            'DNI' => 'required|string|max:20|unique:empleados,DNI',
+            'DNI' => 'required|string|size:9|unique:empleados,DNI|regex:/^\d{8}[A-Z]$/',
             'anos_experiencia' => 'required|integer|max:80'
+        ], [
+            'nombre.required' => 'El nombre es obligatorio.',
+            'nombre.string' => 'El nombre debe ser una cadena de texto.',
+            
+            'nombreUsuario.required' => 'El nombre de usuario es obligatorio.',
+            'nombreUsuario.unique' => 'Este nombre de usuario ya está en uso.',
+            'nombreUsuario.string' => 'El nombre de usuario debe ser una cadena de texto.',
+
+            'apellidos.required' => 'Los apellidos son obligatorios.',
+            'apellidos.string' => 'Los apellidos deben ser una cadena de texto.',
+
+            'email.email' => 'El email debe ser un email válido',
+            'email.required' => 'El email es obligatorio.',
+            'email.unique' => 'Este email ya está en uso.',
+
+            'tlf.digits_between' => 'El número de teléfono tiene que ser una cadena entre 9 y 15 dígitos.' ,
+            'tlf.required' => 'El número de teléfono es obligatorio',
+            'tlf.regex' => 'El número de teléfono sólo puede tener números y opcionalmente +.',
+            'tlf.unique' => 'Este número de teléfono ya esta en uso.',
+
+            'direccion.string' => 'La direccion debe ser una cadena de texto.',
+            'direccion.required' => 'La direccion es obligatorio.',
+
+            'municipio.string' => 'El municipio debe ser una cadena de texto.',
+            'municipio.required' => 'El municipio es obligatorio.',
+
+            'provincia.string' => 'La provincia debe ser una cadena de texto.',
+            'provincia.required' => 'La provincia es obligatorio.',
+
+            'contrasena.required' => 'La contraseña es obligatoria.',
+            'contrasena.min' => 'La contrasena tiene que estar compuesta por al menos 8 caracteres.',
+
+            'DNI.required' => 'El DNI es obligatorio.',
+            'DNI.size' => 'El DNI debe tener 9 caracteres.',
+            'DNI.regex' => 'El formato del DNI no es válido. Debe tener 8 números seguidos de una letra.',
+            'DNI.unique' => 'El DNI ya está registrado en el sistema.',
+
+            'anos_experiencia.required' => 'Los años de experiencia son obligatorios.',
+            'anos_experiencia.integer' => 'Los años de experiencia deben ser un número entero.',
+            'anos_experiencia.max' => 'Los años de experiencia no pueden ser superior a 80.',
         ]);
 
         $usuario = Usuario::create([
