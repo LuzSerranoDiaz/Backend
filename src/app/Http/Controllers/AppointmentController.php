@@ -21,7 +21,7 @@ class AppointmentController extends Controller
      * 
      * Asocia el o los servicios a la cita
      */
-    public function add(Request $request/* , $idContrato, $idCliente, $idEmpleado, $arrayIdServicios */)
+    public function add(Request $request)
     {
 
         $validatedData = $request->validate([
@@ -220,7 +220,7 @@ class AppointmentController extends Controller
     public function update(Request $request, $idCita)
     {
         try {
-            $cita = Cita::findOrFail($idCita);  //where('id', '=', $idCita)->get();
+            $cita = Cita::findOrFail($idCita);
         } catch (ModelNotFoundException) {
             return response()->json(['message' => 'Cita no encontrada'], 404);
         }
@@ -228,7 +228,6 @@ class AppointmentController extends Controller
         $citaServicios = CitaServicio::where('cita_id', '=', $idCita)->get(); //No requiere control de errores ya que si idCita fuera erroneo habria saltaado excepcion antes, y si no hay lineas en citaServicios tampoco pasa nada porque se van a crear nuevas ahora
         $arrayServicios = [];
 
-        /*  return response()->json($cita->load('servicios'),200); */
         $validatedData = $request->validate([
             'contrato_id' => 'sometimes|integer',
             'cliente_id' => 'sometimes|integer',
