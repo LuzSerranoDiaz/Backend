@@ -88,7 +88,7 @@ class EmployeeController extends Controller
             'DNI' => $validatedData['DNI'],
         ]);
 
-        return response()->json([$empleado, $usuario], 200);
+        return response()->json($empleado->load('usuario'), 200);
     }
 
     /**
@@ -151,7 +151,7 @@ class EmployeeController extends Controller
             'DNI' => $validatedData['DNI'],
         ]);
 
-        return response()->json([$empleado, $usuario], 200);
+        return response()->json($empleado->load('usuario'), 200);
     }
 
     /**
@@ -179,7 +179,7 @@ class EmployeeController extends Controller
             return response()->json(['message' => 'Empleado no encontrado, no esta registrado en el sistema'], 404);
         }
 
-        return response()->json($empleado, 200);
+        return response()->json($empleado->load('usuario'), 200);
     }
 
     /**

@@ -63,7 +63,16 @@ Route::delete('employees/{id}', [EmployeeController::class, 'delete']);
 
 //Citas
 Route::post('appointments', [AppointmentController::class, 'add']); 
-Route::get('appointments', [AppointmentController::class, 'show']); 
+Route::get('appointments', [AppointmentController::class, 'show']);
+//Recoger citas de un contrato/cliente/empleado especifico
+Route::get('appointments/contract/{idContrato}/', [AppointmentController::class, 'showContract']); 
+Route::get('appointments/client/{idCliente}', [AppointmentController::class, 'showClient']);  
+Route::get('appointments/employee/{idEmpleado}', [AppointmentController::class, 'showEmployee']);
+//Recoger citas con varios ids
+Route::get('appointments/contract-client/{idContrato}/{idCliente}', [AppointmentController::class, 'showContractClient']); 
+Route::get('appointments/contract-employee/{idContrato}/{idCliente}', [AppointmentController::class, 'showContractEmployee']);  
+Route::get('appointments/client-employee/{idCliente}/{idEmpleado}', [AppointmentController::class, 'showClientEmployee']);
+
 Route::get('appointments/{id}', [AppointmentController::class, 'getAppointment']); 
 Route::put('appointments/{id}', [AppointmentController::class, 'update']); 
 Route::delete('appointments/{id}', [AppointmentController::class, 'delete']); 
