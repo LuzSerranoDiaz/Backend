@@ -20,7 +20,19 @@ class ServiceController extends Controller
             'nombre' => 'required|string|max:255',
             'descripcion' => 'required|string|max:255',
             'duracion' => 'required|integer',
-            'precio' => 'required|decimal:2|max:20',
+            'precio' => 'required|decimal:2',
+        ], [
+            'nomnbre.required' => 'El nombre es obligatorio',
+            'nombre.string' => 'El nombre debe ser una cadena de texto.',
+
+            'descripcion.required' => 'La descripcion es obligatorio',
+            'descripcion.string' => 'La descripcion debe ser una cadena de texto.',
+
+            'duracion.required' => 'La duracion es obligatoria',
+            'duracion.integer' => 'La duracion debe ser un entero (min)',
+
+            'precio.required' => 'El precio es obligatorio',
+            'precio.decimal' => 'El precio debe ser decimal'
         ]);
 
         $servicio = Servicio::create([
@@ -40,6 +52,11 @@ class ServiceController extends Controller
     {
         $servicios = Servicio::all();
 
+        // Verificar si no hay servicios registrados
+        if ($servicios->isEmpty()) {
+            return response()->json(['message' => 'No se han encontrado servicios registrados'], 404);
+        }
+
         return response()->json($servicios, 200);
     }
 
@@ -52,7 +69,7 @@ class ServiceController extends Controller
             $servicio = Servicio::findOrFail($id);
         }
         catch (ModelNotFoundException){
-            return response()->json(['message' => 'servicio no encontrado'], 404);
+            return response()->json(['message' => 'Servicio no encontrado'], 404);
         }
 
         return response()->json($servicio, 200);
@@ -76,7 +93,15 @@ class ServiceController extends Controller
             'nombre' => 'sometimes|string|max:255',
             'descripcion' => 'sometimes|string|max:255',
             'duracion' => 'sometimes|integer|',
-            'precio' => 'sometimes|decimal:2|max:20',
+            'precio' => 'sometimes|decimal:2',
+        ], [
+            'nombre.string' => 'El nombre debe ser una cadena de texto',
+
+            'descripcion.string' => 'La descripcion debe ser una cadena de texto',
+
+            'duracion.integer' => 'La duración debe ser un entero (min)',
+
+            'precio.decimal' => 'El precio debe ser un decimal'
         ]);
 
         $servicio->update($validatedData);
