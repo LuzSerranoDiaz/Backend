@@ -102,6 +102,7 @@ class ProfileController extends Controller
             'nombre.string' => 'El nombre tiene que ser una cadena de texto.',
 
             'nombreUsuario.unique' => 'El nombre de usuario ya está en uso.',
+            'nombreUsuario.string' => 'El nombre de usuario tiene que ser una cadena de texto.',
 
             'email.email' => 'El email debe ser una dirección válida.',
             'email.unique' => 'El email ya está en uso.',

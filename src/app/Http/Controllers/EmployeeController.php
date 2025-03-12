@@ -91,6 +91,9 @@ class EmployeeController extends Controller
         return response()->json([$empleado, $usuario], 200);
     }
 
+    /**
+     * Creamos un empleado y lo asociamos a un usuario que ya existe en el sistema
+     */
     public function addEmployee(Request $request, $id){
 
         try{
@@ -103,12 +106,38 @@ class EmployeeController extends Controller
 
         $validatedData = $request->validate([
             'apellidos' => 'required|string|max:255',
-            'tlf' => 'required|string|max:20',
+            'tlf' => 'required|unique:empleados,tlf|digits_between:9,15|regex:/^\+?\d+$/',
             'direccion' => 'required|string|max:255',
             'municipio' => 'required|string|max:255',
             'provincia' => 'required|string|max:255',
-            'DNI' => 'required|string|max:20|unique:empleados,DNI',
+            'DNI' => 'required|string|size:9|unique:empleados,DNI|regex:/^\d{8}[A-Z]$/',
             'anos_experiencia' => 'required|integer|max:80'
+        ], [
+            'apellidos.required' => 'Los apellidos son obligatorios.',
+            'apellidos.string' => 'Los apellidos deben ser una cadena de texto.',
+
+            'tlf.digits_between' => 'El número de teléfono tiene que ser una cadena entre 9 y 15 dígitos.' ,
+            'tlf.required' => 'El número de teléfono es obligatorio',
+            'tlf.regex' => 'El número de teléfono sólo puede tener números y opcionalmente +.',
+            'tlf.unique' => 'Este número de teléfono ya esta en uso.',
+
+            'direccion.string' => 'La direccion debe ser una cadena de texto.',
+            'direccion.required' => 'La direccion es obligatorio.',
+
+            'municipio.string' => 'El municipio debe ser una cadena de texto.',
+            'municipio.required' => 'El municipio es obligatorio.',
+
+            'provincia.string' => 'La provincia debe ser una cadena de texto.',
+            'provincia.required' => 'La provincia es obligatorio.',
+
+            'DNI.required' => 'El DNI es obligatorio.',
+            'DNI.size' => 'El DNI debe tener 9 caracteres.',
+            'DNI.regex' => 'El formato del DNI no es válido. Debe tener 8 números seguidos de una letra.',
+            'DNI.unique' => 'El DNI ya está registrado en el sistema.',
+
+            'anos_experiencia.required' => 'Los años de experiencia son obligatorios.',
+            'anos_experiencia.integer' => 'Los años de experiencia deben ser un número entero.',
+            'anos_experiencia.max' => 'Los años de experiencia no pueden ser superior a 80.',
         ]);
 
         $empleado = Empleado::create([
@@ -132,6 +161,11 @@ class EmployeeController extends Controller
 
         $empleados = Empleado::with('usuario')->get();
 
+        // Verifica si la colección de empleados está vacía
+        if ($empleados->isEmpty()) {
+            return response()->json(['message' => 'No hay empleados registrados'], 404);
+        }
+
         return response()->json($empleados, 200);
     }
 
@@ -142,7 +176,7 @@ class EmployeeController extends Controller
         $empleado = Empleado::with('usuario')->find($id);
 
         if (!$empleado) {
-            return response()->json(['message' => 'empleado no encontrado'], 404);
+            return response()->json(['message' => 'Empleado no encontrado, no esta registrado en el sistema'], 404);
         }
 
         return response()->json($empleado, 200);
@@ -161,21 +195,51 @@ class EmployeeController extends Controller
 
         $validatedData = $request->validate([
             'usuario_id' => 'sometimes|exists:usuarios,id',
-            'DNI' => 'sometimes|string|nullable|max:20|unique:empleados,DNI,' . $id,
+            'DNI' => 'sometimes|required|string|size:9|unique:clientes,DNI|regex:/^\d{8}[A-Z]$/',
             'anos_experiencia' => 'sometimes|integer|max:80',
             'nombre' => 'sometimes|string|max:255',
             'nombreUsuario' => 'sometimes|string|max:255',
             'apellidos' => 'sometimes|string|max:255',
             'email' => 'sometimes|email|unique:usuarios,email,' . $empleado->usuario_id,
-            'tlf' => 'sometimes|string|max:20',
+            'tlf' => 'sometimes|required|unique:empleados,tlf|digits_between:9,15|regex:/^\+?\d+$/',
             'direccion' => 'sometimes|string|max:255',
             'municipio' => 'sometimes|string|max:255',
             'provincia' => 'sometimes|string|max:255',
-            'contrasena' => 'sometimes|string|min:8',
+            'contrasena' => 'sometimes|string|min:8|confirmed',
+        ], [
+            'DNI.size' => 'El DNI debe tener 9 caracteres.',
+            'DNI.regex' => 'El formato del DNI no es válido. Debe tener 8 números seguidos de una letra.',
+            'DNI.unique' => 'El DNI ya está registrado en el sistema.',
+
+            'anos_experiencia.integer' => 'Los años de experiencia deben ser un número entero.',
+            'anos_experiencia.max' => 'Los años de experiencia no pueden ser superior a 80.',
+
+            'nombre.string' => 'El nombre tiene que ser una cadena de texto.',
+
+            'nombreUsuario.unique' => 'El nombre de usuario ya está en uso.',
+            'nombreUsuario.string' => 'El nombre de usuario tiene que ser una cadena de texto.',
+
+            'apellidos.string' => 'Los apellidos deben ser una cadena de texto.',
+
+            'email.email' => 'El email debe ser una dirección válida.',
+            'email.unique' => 'El email ya está en uso.',
+
+            'tlf.digits_between' => 'El número de teléfono tiene que ser una cadena de dígitos entre 9 y 15.' ,
+            'tlf.regex' => 'El número de teléfono sólo puede tener números y opcionalmente +.',
+            'tlf.unique' => 'Este número de teléfono ya esta en uso.',
+
+            'direccion.string' => 'La direccion debe ser una cadena de texto.',
+
+            'municipio.string' => 'El municipio debe ser una cadena de texto.',
+
+            'provincia.string' => 'La provincia debe ser una cadena de texto.',
+
+            'contrasena.min' => 'La contraseña tiene que tener al menos 8 caracteres.',
+            'contrasena.confirmed' => 'Las contraseñas deben ser iguales'
         ]);
 
-        if ($validatedData['DNI'] == "") {
-            $validatedData['DNI'] = $empleado->DNI;
+        if ($request->has('DNI')) {
+            $empleado->DNI = $validatedData['DNI'];
         }
 
         $empleado->update($validatedData);
