@@ -48,10 +48,9 @@ class ServiceController extends Controller
      */
     public function getService($id)
     {
-        try{
+        try {
             $servicio = Servicio::findOrFail($id);
-        }
-        catch (ModelNotFoundException){
+        } catch (ModelNotFoundException) {
             return response()->json(['message' => 'servicio no encontrado'], 404);
         }
 
@@ -63,13 +62,12 @@ class ServiceController extends Controller
      */
     public function update(Request $request, $id)
     {
-        try{
+        try {
             $servicio = Servicio::findOrFail($id);
-        }
-        catch (ModelNotFoundException){
+        } catch (ModelNotFoundException) {
             return response()->json(['message' => 'servicio no encontrado'], 404);
         }
-        
+
 
         $validatedData = $request->validate([
             'servicio_id' => 'sometimes|exists:servicios,id,' . $id,
@@ -88,10 +86,9 @@ class ServiceController extends Controller
      */
     public function delete($id)
     {
-        try{
+        try {
             $servicio = Servicio::findOrFail($id);
-        }
-        catch (ModelNotFoundException){
+        } catch (ModelNotFoundException) {
             return response()->json(['message' => 'servicio no encontrado'], 404);
         }
 

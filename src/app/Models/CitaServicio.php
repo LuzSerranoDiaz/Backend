@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class CitaServicio extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'cita_id',
+        'servicio_id'
+    ];
 }

@@ -48,7 +48,7 @@ class EmployeeController extends Controller
             'DNI' => $validatedData['DNI'],
         ]);
 
-        return response()->json([$empleado, $usuario], 200);
+        return response()->json($empleado->load('usuario'), 200);
     }
 
     public function addEmployee(Request $request, $id){
@@ -82,7 +82,7 @@ class EmployeeController extends Controller
             'DNI' => $validatedData['DNI'],
         ]);
 
-        return response()->json([$empleado, $usuario], 200);
+        return response()->json($empleado->load('usuario'), 200);
     }
 
     /**
@@ -92,7 +92,7 @@ class EmployeeController extends Controller
 
         $empleados = Empleado::with('usuario')->get();
 
-        return response()->json($empleados, 200);
+        return response()->json($empleados->load('usuario'), 200);
     }
 
     /**
@@ -105,7 +105,7 @@ class EmployeeController extends Controller
             return response()->json(['message' => 'empleado no encontrado'], 404);
         }
 
-        return response()->json($empleado, 200);
+        return response()->json($empleado->load('usuario'), 200);
     }
 
     /**

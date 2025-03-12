@@ -13,6 +13,16 @@ class Cita extends Model
 {
 
     use HasFactory, Notifiable;
+
+    protected $fillable = [
+        'cliente_id',
+        'empleado_id',
+        'contrato_id',
+        'fecha',
+        'estado',
+        'numero_de_atenciones',
+    ];
+
     /**
      * Get the cliente that owns the Cita
      *
