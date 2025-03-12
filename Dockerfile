@@ -18,7 +18,7 @@ COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
 USER root
 
-RUN chmod 777 -R /var/www/app
+RUN chmod 777 -R /var/www/html
 
 
 #RUN composer require laravel/sanctum
