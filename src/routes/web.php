@@ -63,18 +63,18 @@ Route::delete('employees/{id}', [EmployeeController::class, 'delete']);
 
 //Citas
 Route::post('appointments', [AppointmentController::class, 'add']); 
-/* withServicios es booleano */
+/* withServicios es "booleano", true es true y si pones cualquier otra cosa es false */
 Route::get('appointments/{offset}/{limit}/{withServicios}', [AppointmentController::class, 'show']);
-//Recoger citas de un contrato/cliente/empleado especifico
+/* Recoger citas de un contrato/cliente/empleado especifico */
 Route::get('appointments/contract/{idContrato}/{offset}/{limit}/{withServicios}', [AppointmentController::class, 'showContract']); 
 Route::get('appointments/client/{idCliente}/{offset}/{limit}/{withServicios}', [AppointmentController::class, 'showClient']);  
 Route::get('appointments/employee/{idEmpleado}/{offset}/{limit}/{withServicios}', [AppointmentController::class, 'showEmployee']);
-//Recoger citas con varios ids
+/* Recoger citas con varios ids */
 Route::get('appointments/contract-client/{idContrato}/{idCliente}/{offset}/{limit}/{withServicios}', [AppointmentController::class, 'showContractClient']); 
 Route::get('appointments/contract-employee/{idContrato}/{idCliente}/{offset}/{limit}/{withServicios}', [AppointmentController::class, 'showContractEmployee']);  
 Route::get('appointments/client-employee/{idCliente}/{idEmpleado}/{offset}/{limit}/{withServicios}', [AppointmentController::class, 'showClientEmployee']);
-
-Route::get('appointments/{id}', [AppointmentController::class, 'getAppointment']); 
+/* Resto de rutas */
+Route::get('appointments/{id}/{withServicios}', [AppointmentController::class, 'getAppointment']); 
 Route::put('appointments/{id}', [AppointmentController::class, 'update']); 
 Route::delete('appointments/{id}', [AppointmentController::class, 'delete']); 
 
