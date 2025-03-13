@@ -21,7 +21,7 @@ class ServicioFactory extends Factory
     {
         return [
             'nombre' => fake()->unique()->name(),
-            'descripcion' => Str::random(30),
+            'descripcion' => fake()->text(50),
             'duracion' => random_int(15, 120),
             'precio' => rand(1000, 10000) / 100,
         ];

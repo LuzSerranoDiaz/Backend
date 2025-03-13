@@ -56,20 +56,51 @@ class AppointmentController extends Controller
     /**
      * Muestra las citas con sus servicios
      */
-    public function show()
+    public function show($offset, $limit, $withServicios)
     {
-        $citas = Cita::all();
+        //Vuelve withServicios a booleano, acepta 1, "1", true, "true", "on", y "yes" como true y cualquier otro valor devuelve falso
+        $withBoolean = $withServicios->boolean();
 
-        return response()->json($citas->load('servicios'), 200);
+        // Offset y limit para limitar las lineas mostradas
+        if ($offset > Cita::count() || $limit > Cita::count()) {
+            return response()->json(['Message' => 'Offset o limit supera el número de lineas en tabla'], 400);
+        }
+
+        // Si limit es 0 se ensena todo
+        if ($limit == 0) {
+            $citas = Cita::all();
+        } else {
+            $citas = Cita::all()->offset($offset)->limit($limit);
+        }
+
+        //$withServicios es un booleano para indicar si se quieren ver los servicios o no de cada cita
+        $withBoolean ? $return = response()->json($citas->load('servicios'), 200) :
+            $return = response()->json($citas, 200);
+
+        return $return;
     }
 
     /**
      * Muestra las citas con sus servicios tengan un contrato especifico
      */
-    public function showContract($idContrato)
+    public function showContract($idContrato, $offset, $limit, $withServicios)
     {
+        //Vuelve withServicios a booleano, acepta 1, "1", true, "true", "on", y "yes" como true y cualquier otro valor devuelve falso
+        $withBoolean = $withServicios->boolean();
+
         try {
-            $citas = Cita::where('contrato_id', '=', $idContrato)->get();
+            // Offset y limit para limitar las lineas mostradas
+            if ($offset > Cita::count() || $limit > Cita::count()) {
+                return response()->json(['Message' => 'Offset o limit supera el número de lineas en tabla'], 400);
+            }
+
+            // Si limit es 0 se ensena todo
+            if ($limit == 0) {
+                $citas = Cita::where('contrato_id', '=', $idContrato)->get();
+            } else {
+                $citas = Cita::where('contrato_id', '=', $idContrato)->offset($offset)->limit($limit)->get();
+            }
+
             if ($citas->empty()) {
                 throw new ModelNotFoundException();
             }
@@ -77,16 +108,34 @@ class AppointmentController extends Controller
             return response()->json(['message' => 'cita no encontrada'], 404);
         }
 
-        return response()->json($citas->load('servicios'), 200);
+        //$withServicios es un booleano para indicar si se quieren ver los servicios o no de cada cita
+        $withBoolean ? $return = response()->json($citas->load('servicios'), 200) :
+            $return = response()->json($citas, 200);
+
+        return $return;
     }
 
     /**
      * Muestra las citas con sus servicios donde tengan un cliente especifico
      */
-    public function showClient($idCliente)
+    public function showClient($idCliente, $offset, $limit, $withServicios)
     {
+        //Vuelve withServicios a booleano, acepta 1, "1", true, "true", "on", y "yes" como true y cualquier otro valor devuelve falso
+        $withBoolean = $withServicios->boolean();
+
         try {
-            $citas = Cita::where('cliente_id', '=', $idCliente)->get();
+            // Offset y limit para limitar las lineas mostradas
+            if ($offset > Cita::count() || $limit > Cita::count()) {
+                return response()->json(['Message' => 'Offset o limit supera el número de lineas en tabla'], 400);
+            }
+
+            // Si limit es 0 se ensena todo
+            if ($limit == 0) {
+                $citas = Cita::where('cliente_id', '=', $idCliente)->get();
+            } else {
+                $citas = Cita::where('cliente_id', '=', $idCliente)->offset($offset)->limit($limit)->get();
+            }
+
             if ($citas->empty()) {
                 throw new ModelNotFoundException();
             }
@@ -94,16 +143,34 @@ class AppointmentController extends Controller
             return response()->json(['message' => 'cita no encontrada'], 404);
         }
 
-        return response()->json($citas->load('servicios'), 200);
+        //$withServicios es un booleano para indicar si se quieren ver los servicios o no de cada cita
+        $withBoolean ? $return = response()->json($citas->load('servicios'), 200) :
+            $return = response()->json($citas, 200);
+
+        return $return;
     }
 
     /**
      * Muestra las citas con sus servicios donde tengan un empleado especifico
      */
-    public function showEmployee($idEmpleado)
+    public function showEmployee($idEmpleado, $offset, $limit, $withServicios)
     {
+        //Vuelve withServicios a booleano, acepta 1, "1", true, "true", "on", y "yes" como true y cualquier otro valor devuelve falso
+        $withBoolean = $withServicios->boolean();
+
         try {
-            $citas = Cita::where('empleado_id', '=', $idEmpleado)->get();
+            // Offset y limit para limitar las lineas mostradas
+            if ($offset > Cita::count() || $limit > Cita::count()) {
+                return response()->json(['Message' => 'Offset o limit supera el número de lineas en tabla'], 400);
+            }
+
+            // Si limit es 0 se ensena todo
+            if ($limit == 0) {
+                $citas = Cita::where('empleado_id', '=', $idEmpleado)->get();
+            } else {
+                $citas = Cita::where('empleado_id', '=', $idEmpleado)->offset($offset)->limit($limit)->get();
+            }
+
             if ($citas->empty()) {
                 throw new ModelNotFoundException();
             }
@@ -111,19 +178,40 @@ class AppointmentController extends Controller
             return response()->json(['message' => 'cita no encontrada'], 404);
         }
 
-        return response()->json($citas->load('servicios'), 200);
+        //$withServicios es un booleano para indicar si se quieren ver los servicios o no de cada cita
+        $withBoolean ? $return = response()->json($citas->load('servicios'), 200) :
+            $return = response()->json($citas, 200);
+
+        return $return;
     }
 
     /**
      * Muestra las citas con sus servicios donde tengan un contrato y cliente especifico
      */
-    public function showContractClient($idContrato, $idCliente)
+    public function showContractClient($idContrato, $idCliente, $offset, $limit, $withServicios)
     {
+        //Vuelve withServicios a booleano, acepta 1, "1", true, "true", "on", y "yes" como true y cualquier otro valor devuelve falso
+        $withBoolean = $withServicios->boolean();
+
         try {
-            $citas = 
+            // Offset y limit para limitar las lineas mostradas
+            if ($offset > Cita::count() || $limit > Cita::count()) {
+                return response()->json(['Message' => 'Offset o limit supera el número de lineas en tabla'], 400);
+            }
+
+            // Si limit es 0 se ensena todo
+            if ($limit == 0) {
+                $citas =
                 Cita::where('contrato_id', '=', $idContrato,)
                 ->where('cliente_id', '=', $idCliente)
                 ->get();
+            } else {
+                $citas =
+                Cita::where('contrato_id', '=', $idContrato,)
+                ->where('cliente_id', '=', $idCliente)
+                ->offset($offset)->limit($limit)->get();
+            }
+
             if ($citas->empty()) {
                 throw new ModelNotFoundException();
             }
@@ -131,19 +219,40 @@ class AppointmentController extends Controller
             return response()->json(['message' => 'cita no encontrada'], 404);
         }
 
-        return response()->json($citas->load('servicios'), 200);
+        //$withServicios es un booleano para indicar si se quieren ver los servicios o no de cada cita
+        $withBoolean ? $return = response()->json($citas->load('servicios'), 200) :
+            $return = response()->json($citas, 200);
+
+        return $return;
     }
 
     /**
      * Muestra las citas con sus servicios
      */
-    public function showContractEmployee($idContrato, $idEmpleado)
+    public function showContractEmployee($idContrato, $idEmpleado, $offset, $limit, $withServicios)
     {
+        //Vuelve withServicios a booleano, acepta 1, "1", true, "true", "on", y "yes" como true y cualquier otro valor devuelve falso
+        $withBoolean = $withServicios->boolean();
+
         try {
-            $citas = 
+            // Offset y limit para limitar las lineas mostradas
+            if ($offset > Cita::count() || $limit > Cita::count()) {
+                return response()->json(['Message' => 'Offset o limit supera el número de lineas en tabla'], 400);
+            }
+
+            // Si limit es 0 se ensena todo
+            if ($limit == 0) {
+                $citas =
                 Cita::where('contrato_id', '=', $idContrato,)
                 ->where('empleado_id', '=', $idEmpleado)
                 ->get();
+            } else {
+                $citas =
+                Cita::where('contrato_id', '=', $idContrato,)
+                ->where('empleado_id', '=', $idEmpleado)
+                ->offset($offset)->limit($limit)->get();
+            }
+
             if ($citas->empty()) {
                 throw new ModelNotFoundException();
             }
@@ -151,16 +260,20 @@ class AppointmentController extends Controller
             return response()->json(['message' => 'cita no encontrada'], 404);
         }
 
-        return response()->json($citas->load('servicios'), 200);
+        //$withServicios es un booleano para indicar si se quieren ver los servicios o no de cada cita
+        $withBoolean ? $return = response()->json($citas->load('servicios'), 200) :
+            $return = response()->json($citas, 200);
+
+        return $return;
     }
 
     /**
      * Muestra las citas con sus servicios
      */
-    public function showClientEmployee($idCliente, $idEmpleado)
+    public function showClientEmployee($idCliente, $idEmpleado, $offset, $limit, $withServicios)
     {
         try {
-            $citas = 
+            $citas =
                 Cita::where('cliente_id', '=', $idCliente,)
                 ->where('empleado_id', '=', $idEmpleado)
                 ->get();
@@ -177,7 +290,7 @@ class AppointmentController extends Controller
     /**
      * Obtiene una cita con su o sus servicios
      */
-    public function getAppointment($idCita)
+    public function getAppointment($idCita, $offset, $limit, $withServicios)
     {
         try {
             $cita = Cita::FindOrFail($idCita);
