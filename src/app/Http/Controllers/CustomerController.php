@@ -44,7 +44,7 @@ class CustomerController extends Controller
             'email.email' => 'El email debe ser una dirección válida.',
             'email.unique' => 'El email ya está registrado.',
 
-            'tlf.digits_between' => 'El número de teléfono tiene que ser una cadena entre 9 y 15 dígitos.' ,
+            'tlf.digits_between' => 'El número de teléfono tiene que ser una cadena entre 9 y 15 dígitos.',
             'tlf.required' => 'El número de teléfono es obligatorio',
             'tlf.regex' => 'El número de teléfono sólo puede tener números y opcionalmente +.',
             'tlf.unique' => 'Este número de teléfono ya esta en uso.',
@@ -109,7 +109,7 @@ class CustomerController extends Controller
             //'email.email' => 'El email debe ser una dirección válida.',
             //'email.unique' => 'El email ya está registrado.',
 
-            'tlf.digits_between' => 'El número de teléfono tiene que ser una cadena entre 9 y 15 dígitos.' ,
+            'tlf.digits_between' => 'El número de teléfono tiene que ser una cadena entre 9 y 15 dígitos.',
             'tlf.required' => 'El número de teléfono es obligatorio',
             'tlf.regex' => 'El número de teléfono sólo puede tener números y opcionalmente +.',
             'tlf.unique' => 'Este número de teléfono ya esta en uso.',
@@ -145,11 +145,25 @@ class CustomerController extends Controller
     /**
      * Muestra los clientes
      */
-    public function show()
+    public function show($skip, $take)
     {
-        $clientes = Cliente::with('usuario')->get();
+        // skip y take para limitar las lineas mostradas
+        if ($skip >= Cliente::count()) {
+            return response()->json(['Message' => 'skip supera el número de lineas en tabla'], 400);
+        }
 
-        return response()->json($clientes, 200);
+        // Si take es 0 se ensena todo
+        if ($take == 0) {
+            $clientes = cliente::all()->skip($skip)->take(cliente::count());
+        } else {
+            $clientes = cliente::all()->skip($skip)->take($take);
+        }
+
+        if ($clientes->isEmpty()) {
+            return response()->json(['message' => 'No hay clientes registradas'], 404);
+        }
+
+        return response()->json($clientes->load('usuario'), 200);
     }
 
     /**
@@ -204,7 +218,7 @@ class CustomerController extends Controller
             'email.email' => 'El email debe ser una dirección válida.',
             'email.unique' => 'El email ya está en uso.',
 
-            'tlf.digits_between' => 'El número de teléfono tiene que ser una cadena de dígitos entre 9 y 15.' ,
+            'tlf.digits_between' => 'El número de teléfono tiene que ser una cadena de dígitos entre 9 y 15.',
             'tlf.regex' => 'El número de teléfono sólo puede tener números y opcionalmente +.',
             'tlf.unique' => 'Este número de teléfono ya esta en uso.',
 
@@ -258,5 +272,4 @@ class CustomerController extends Controller
             return response()->json(['message' => 'No se pudo eliminar el cliente o el usuario', 'error' => $e->getMessage()], 500);
         }
     }
-
 }
