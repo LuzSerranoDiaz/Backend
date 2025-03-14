@@ -71,7 +71,7 @@ Route::get('appointments/client/{idCliente}/{offset}/{limit}/{withServicios}', [
 Route::get('appointments/employee/{idEmpleado}/{offset}/{limit}/{withServicios}', [AppointmentController::class, 'showEmployee']);
 /* Recoger citas con varios ids */
 Route::get('appointments/contract-client/{idContrato}/{idCliente}/{offset}/{limit}/{withServicios}', [AppointmentController::class, 'showContractClient']); 
-Route::get('appointments/contract-employee/{idContrato}/{idCliente}/{offset}/{limit}/{withServicios}', [AppointmentController::class, 'showContractEmployee']);  
+Route::get('appointments/contract-employee/{idContrato}/{idEmpleado}/{offset}/{limit}/{withServicios}', [AppointmentController::class, 'showContractEmployee']);  
 Route::get('appointments/client-employee/{idCliente}/{idEmpleado}/{offset}/{limit}/{withServicios}', [AppointmentController::class, 'showClientEmployee']);
 /* Resto de rutas */
 Route::get('appointments/{id}/{withServicios}', [AppointmentController::class, 'getAppointment']); 

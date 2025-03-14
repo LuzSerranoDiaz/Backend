@@ -55,7 +55,7 @@ class Cita extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function citaServicios(): BelongsToMany
+    public function servicios(): BelongsToMany
     {
         return $this->belongsToMany(Servicio::class, 'cita_servicios', 'cita_id', 'servicio_id');
     }

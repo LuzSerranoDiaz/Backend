@@ -27,7 +27,7 @@ class AppointmentController extends Controller
     {
 
         $validatedData = $request->validate([
-            'contrato_id' => 'required|integer',
+            'contrato_id' => 'required|integer', //si no existe el contrato manejar error
             'cliente_id' => 'required|integer',
             'empleado_id' => 'required|integer',
             'arrayServicios' => 'required|array',
@@ -82,12 +82,6 @@ class AppointmentController extends Controller
      */
     public function show($skip, $take, $withServicios)
     {
-
-        $clientes = Cliente::pluck('id')->toArray();
-        $cliente_id = fake()->randomElement($clientes);
-        $contratos = strval(array_search($cliente_id, Contrato::pluck('id')->toArray()));
-        return response()->json($contratos, 400);
-
         // skip y take para limitar las lineas mostradas
         if ($skip > Cita::count()) {
             return response()->json(['Message' => 'skip supera el número de lineas en tabla'], 400);
@@ -367,11 +361,8 @@ class AppointmentController extends Controller
     /**
      * Obtiene una cita con su o sus servicios
      */
-    public function getAppointment($idCita, $skip, $take, $withServicios)
+    public function getAppointment($idCita, $withServicios)
     {
-        //Vuelve withServicios a booleano, acepta 1, "1", true, "true", "on", y "yes" como true y cualquier otro valor devuelve falso
-        $withBoolean = $withServicios->boolean();
-
         try {
             $cita = Cita::FindOrFail($idCita);
         } catch (ModelNotFoundException) {

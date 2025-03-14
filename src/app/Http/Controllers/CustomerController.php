@@ -194,12 +194,12 @@ class CustomerController extends Controller
 
         $validatedData = $request->validate([
             'usuario_id' => 'sometimes|exists:usuarios,id',
-            'DNI' => 'sometimes|required|string|size:9|unique:clientes,DNI|regex:/^\d{8}[A-Z]$/',
+            'DNI' => 'sometimes|string|size:9|unique:clientes,DNI|regex:/^\d{8}[A-Z]$/',
             'nombre' => 'sometimes|string|max:255',
             'nombreUsuario' => 'sometimes|unique:usuarios,nombreUsuario|string|max:255',
             'apellidos' => 'sometimes|string|max:255',
             'email' => 'sometimes|email|unique:usuarios,email,' . $cliente->usuario_id,
-            'tlf' => 'sometimes|required|unique:clientes,tlf|digits_between:9,15|regex:/^\+?\d+$/',
+            'tlf' => 'sometimes|unique:clientes,tlf|digits_between:9,15|regex:/^\+?\d+$/',
             'direccion' => 'sometimes|string|max:255',
             'municipio' => 'sometimes|string|max:255',
             'provincia' => 'sometimes|string|max:255',
@@ -232,9 +232,16 @@ class CustomerController extends Controller
             'contrasena.confirmed' => 'Las contraseñas deben ser iguales'
         ]);
 
+        // Verificar si 'DNI' está presente en los datos validados
+        if (array_key_exists('DNI', $validatedData) && $validatedData['DNI'] == "") {
+            $validatedData['DNI'] = $cliente->DNI;
+        } elseif (!array_key_exists('DNI', $validatedData)) {
+            $validatedData['DNI'] = $cliente->DNI; 
+        }
+        /*
         if ($validatedData['DNI'] == "") {
             $validatedData['DNI'] = $cliente->DNI;
-        }
+        }*/
 
         $cliente->update($validatedData);
         $usuario->update($validatedData);
