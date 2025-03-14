@@ -22,8 +22,8 @@ class EmpleadoEspecilidadFactory extends Factory
         $especialidad_id = Especialidad::pluck('id')->toArray();
 
         return [
-            'empleado_id' => fake()->unique()->randomElement($empleado_id),
-            'especialidad_id' => fake()->unique()->randomElement($especialidad_id),
+            'empleado_id' => fake()->numberBetween(1, count($empleado_id))/* ->randomElement($empleado_id) */,
+            'especialidad_id' => fake()->unique()->numberBetween(1, count($empleado_id)),
         ];
     }
 }

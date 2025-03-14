@@ -21,7 +21,7 @@ class ClienteFactory extends Factory
         $usuario_id = Usuario::pluck('id')->toArray();
 
         return [
-            'usuario_id' => fake()->unique()->randomElement($usuario_id),
+            'usuario_id' => fake()->numberBetween(1, count($usuario_id)),
             'DNI' => Str::random(9),
             'apellidos' => fake()->lastName(),
             'tlf' => fake()->unique()->phoneNumber(),

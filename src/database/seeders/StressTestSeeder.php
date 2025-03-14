@@ -21,16 +21,20 @@ class StressTestSeeder extends Seeder
      */
     public function run(): void
     {
-        Usuario::factory()->count(3003)->create();
-        Cliente::factory()->count(3000)->create();
-        Empleado::factory()->count(3)->create();
+        Usuario::factory(3000)->has(
+            Cliente::factory()->has(
+                Contrato::factory()
+            )
+        )->create();
         Especialidad::factory()->create(['nombre' => 'cortar']);
         Especialidad::factory()->create(['nombre' => 'tintar']);
         Especialidad::factory()->create(['nombre' => 'degradar']);
-        Contrato::factory()->count(3000)->create();
-        Cita::factory()->count(30000)->create();
-        Servicio::factory()->count(3)->create();
-        CitaServicio::factory()->count(10)->create();
-        EmpleadoEspecilidad::factory()->count(3)->create();
+        Usuario::factory(3)->has(
+            Empleado::factory()
+        )->create();
+        EmpleadoEspecilidad::factory(3)->create();
+        Servicio::factory(3)->create();
+        Cita::factory(30000)->create();
+        CitaServicio::factory(random_int(60000, 100000))->create();
     }
 }

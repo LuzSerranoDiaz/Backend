@@ -22,7 +22,7 @@ class CitaServicioFactory extends Factory
         $servicio_id = Servicio::pluck('id')->toArray();
 
         return [
-            'cita_id' => fake()->unique()->randomElement($cita_id),
+            'cita_id' => fake()->randomElement($cita_id),
             'servicio_id' => fake()->randomElement($servicio_id),
         ];
     }

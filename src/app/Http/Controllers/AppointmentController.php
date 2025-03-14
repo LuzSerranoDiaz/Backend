@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Cita;
 use App\Models\CitaServicio;
+use App\Models\Cliente;
+use App\Models\Contrato;
 use App\Models\Servicio;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -80,6 +82,12 @@ class AppointmentController extends Controller
      */
     public function show($skip, $take, $withServicios)
     {
+
+        $clientes = Cliente::pluck('id')->toArray();
+        $cliente_id = fake()->randomElement($clientes);
+        $contratos = strval(array_search($cliente_id, Contrato::pluck('id')->toArray()));
+        return response()->json($contratos, 400);
+
         // skip y take para limitar las lineas mostradas
         if ($skip > Cita::count()) {
             return response()->json(['Message' => 'skip supera el número de lineas en tabla'], 400);
