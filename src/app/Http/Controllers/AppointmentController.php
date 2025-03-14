@@ -82,12 +82,6 @@ class AppointmentController extends Controller
      */
     public function show($skip, $take, $withServicios)
     {
-
-        $clientes = Cliente::pluck('id')->toArray();
-        $cliente_id = fake()->randomElement($clientes);
-        $contratos = strval(array_search($cliente_id, Contrato::pluck('id')->toArray()));
-        return response()->json($contratos, 400);
-
         // skip y take para limitar las lineas mostradas
         if ($skip > Cita::count()) {
             return response()->json(['Message' => 'skip supera el número de lineas en tabla'], 400);
