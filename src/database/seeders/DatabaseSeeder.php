@@ -10,7 +10,6 @@ use App\Models\Empleado;
 use App\Models\EmpleadoEspecilidad;
 use App\Models\Especialidad;
 use App\Models\Servicio;
-use App\Models\User;
 use App\Models\Usuario;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
