@@ -16,7 +16,8 @@ class ContractController extends Controller
     /**
      * Añade un contrato a un cliente
      */
-    public function add($idCliente ,Request $request) {
+    public function add($idCliente, Request $request)
+    {
         $validatedData = $request->validate([
             'numero_de_atenciones' => 'required|integer|max:50',
             'numero_de_atenciones_realizadas' => 'sometimes|integer|max:50',
@@ -57,7 +58,8 @@ class ContractController extends Controller
     /**
      * Muestra todos los contratos
      */
-    public function showAll() {
+    public function showAll()
+    {
         $contratos = Contrato::all();
 
         // Verificar si no hay contratos registrados
@@ -69,27 +71,37 @@ class ContractController extends Controller
     }
 
     /**
-    * Muestra los contratos de un cliente
-    */
-    public function show($idCliente) {
-        $contratos = Contrato::where('cliente_id', '=', $idCliente)->get();
+     * Muestra los contratos de un cliente
+     */
+    public function show($idCliente)
+    {
+        $resolution = [];
 
-        // Verificar si no hay contratos registrados
-        if ($contratos->isEmpty()) {
-            return response()->json(['message' => 'No se han encontrado contratos registrados'], 404);
+        try {
+            $contratos = Contrato::where('cliente_id', '=', $idCliente)->get();
+
+            foreach ($contratos as $contrato) {
+                array_push($resolution, Contrato::find($contrato->id));
+            }
+
+            if ($resolution == []) {
+                throw new ModelNotFoundException();
+            }
+        } catch (ModelNotFoundException) {
+            return response()->json(['message' => 'Cita no encontrada'], 404);
         }
 
         return response()->json($contratos, 200);
     }
 
     /**
-    * Obtiene un contrato de un cliente
-    */
-    public function getContract($idCliente, $idContrato) {
-        try{
+     * Obtiene un contrato de un cliente
+     */
+    public function getContract($idCliente, $idContrato)
+    {
+        try {
             $contrato = Contrato::findOrFail($idContrato);
-        }
-        catch (ModelNotFoundException){
+        } catch (ModelNotFoundException) {
             return response()->json(['message' => 'Contrato no encontrado'], 404);
         }
 
@@ -99,11 +111,11 @@ class ContractController extends Controller
     /**
      * Modifica un contrato de un cliente
      */
-    public function update(Request $request, $idContrato) {
-        try{
+    public function update(Request $request, $idContrato)
+    {
+        try {
             $contrato = Contrato::findOrFail($idContrato);
-        }
-        catch (ModelNotFoundException){
+        } catch (ModelNotFoundException) {
             return response()->json(['message' => 'contrato no encontrado'], 404);
         }
 
@@ -133,11 +145,11 @@ class ContractController extends Controller
     /**
      * Elimina un contrato de un cliente
      */
-    public function delete($idContrato) {
-        try{
+    public function delete($idContrato)
+    {
+        try {
             $contrato = Contrato::findOrFail($idContrato);
-        }
-        catch (ModelNotFoundException){
+        } catch (ModelNotFoundException) {
             return response()->json(['message' => 'Contrato no encontrado'], 404);
         }
 
