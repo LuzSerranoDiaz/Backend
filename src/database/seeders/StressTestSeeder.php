@@ -35,6 +35,6 @@ class StressTestSeeder extends Seeder
         EmpleadoEspecilidad::factory(3)->create();
         Servicio::factory(3)->create();
         Cita::factory(30000)->create();
-        CitaServicio::factory(random_int(60000, 100000))->create();
+        //CitaServicio::factory(random_int(60000, 100000))->create();
     }
 }

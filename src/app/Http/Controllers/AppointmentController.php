@@ -8,6 +8,7 @@ use App\Models\CitaServicio;
 use App\Models\Cliente;
 use App\Models\Contrato;
 use App\Models\Servicio;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 use function Pest\Laravel\json;
@@ -76,286 +77,58 @@ class AppointmentController extends Controller
 
         return response()->json($cita->load('servicios'), 201);
     }
-
     /**
      * Muestra las citas con sus servicios
      */
-    public function show($skip, $take, $withServicios)
+    public function show(Request $request)
     {
         // skip y take para limitar las lineas mostradas
-        if ($skip > Cita::count()) {
+        if ($request->get('skip') > Cita::count()) {
             return response()->json(['Message' => 'skip supera el número de lineas en tabla'], 400);
         }
 
-        // Si take es 0 se ensena todo
-        if ($take == 0) {
-            $citas = Cita::all()->skip($skip)->take(Cita::count());
+        $request->validate([
+            'nombre_cliente' => 'sometimes|string',
+            'id_empleado' => 'sometimes|integer',
+            'fecha' => 'sometimes|date',
+            'estado' => 'sometimes|in:pendiente,cancelado,completado',
+        ]);
+
+        $query = Cita::with('servicios')
+            ->select('citas.*')
+            ->join('clientes', 'cliente_id', 'clientes.id')
+            ->join('empleados', 'empleado_id', 'empleados.id')
+            ->join('usuarios', 'clientes.usuario_id', 'usuarios.id');
+
+        if ($request->get('nombre_cliente')) {
+            $query = $query->where('usuarios.nombre', 'LIKE', $request->get('nombre_cliente') . '%');
+        }
+        if ($request->get('id_empleado')) {
+            $query = $query->where('empleados.id', '=', $request->get('id_empleado'));
+        }
+        if ($request->get('fecha')) {
+            $query = $query->where('citas.fecha', 'LIKE', $request->get('fecha') . '%');
+        }
+        if ($request->get('estado')) {
+            $query = $query->where('citas.estado', 'LIKE', $request->get('estado') . '%');
+        }
+
+        $citas = $query->get();
+
+        if ($request->get('skip')) {
+            $citas = $citas->skip((int)$request->get('skip'));
+        }
+        if ($request->get('take')) {
+            $citas = $citas->take((int)$request->get('take'));
         } else {
-            $citas = Cita::all()->skip($skip)->take($take);
+            $citas = $citas->take(Cita::count());
         }
 
         if ($citas->isEmpty()) {
             return response()->json(['message' => 'No hay citas registradas'], 404);
         }
 
-        //$withServicios es un booleano para indicar si se quieren ver los servicios o no de cada cita
-        $withServicios == "true" ? $return = response()->json($citas->load('servicios'), 200) :
-            $return = response()->json($citas, 200);
-
-        return $return;
-    }
-
-    /**
-     * Muestra las citas con sus servicios tengan un contrato especifico
-     */
-    public function showContract($idContrato, $skip, $take, $withServicios)
-    {
-        //todo: encontrar mejor manera de hacer esto, con ::where()->get() y ->empty() siempre decia que estaba vacio.
-        $resolution = [];
-
-        try {
-            // Si take es 0 se ensena todo
-            if ($take == 0) {
-                $citas = Cita::where('contrato_id', '=', $idContrato)->skip($skip)->take(Cita::count())->get();
-            } else {
-                $citas = Cita::where('contrato_id', '=', $idContrato)->skip($skip)->take($take)->get();
-            }
-
-            // skip y take para limitar las lineas mostradas
-            // count() cuenta como un array así que hace falta sumarle +1 
-            if ($skip > $citas->count()+1) {
-                return response()->json(['Message' => 'skip supera el número de lineas en tabla'], 400);
-            }
-
-            foreach ($citas as $cita) {
-                array_push($resolution, Cita::find($cita->id));
-            }
-
-            if ($resolution == []) {
-                throw new ModelNotFoundException();
-            }
-        } catch (ModelNotFoundException) {
-            return response()->json(['message' => 'Cita no encontrada'], 404);
-        }
-
-        //$withServicios es un booleano para indicar si se quieren ver los servicios o no de cada cita
-        $withServicios == "true" ? $return = response()->json($citas->load('servicios'), 200) :
-            $return = response()->json($citas, 200);
-
-        return $return;
-    }
-
-    /**
-     * Muestra las citas con sus servicios donde tengan un cliente especifico
-     */
-    public function showClient($idCliente, $skip, $take, $withServicios)
-    {
-        //todo: encontrar mejor manera de hacer esto, con ::where()->get() y ->empty() siempre decia que estaba vacio.
-        $resolution = [];
-
-        try {
-            // Si take es 0 se ensena todo
-            if ($take == 0) {
-                $citas = Cita::where('cliente_id', '=', $idCliente)->skip($skip)->take(Cita::count())->get();
-            } else {
-                $citas = Cita::where('cliente_id', '=', $idCliente)->skip($skip)->take($take)->get();
-            }
-
-            // skip y take para limitar las lineas mostradas
-            if ($skip > $citas->count()+1) {
-                return response()->json(['Message' => 'skip supera el número de lineas en tabla'], 400);
-            }
-
-            foreach ($citas as $cita) {
-                array_push($resolution, Cita::find($cita->id));
-            }
-
-            if ($resolution == []) {
-                throw new ModelNotFoundException();
-            }
-        } catch (ModelNotFoundException) {
-            return response()->json(['message' => 'cita no encontrada'], 404);
-        }
-
-        //$withServicios es un booleano para indicar si se quieren ver los servicios o no de cada cita
-        $withServicios == "true" ? $return = response()->json($citas->load('servicios'), 200) :
-            $return = response()->json($citas, 200);
-
-        return $return;
-    }
-
-    /**
-     * Muestra las citas con sus servicios donde tengan un empleado especifico
-     */
-    public function showEmployee($idEmpleado, $skip, $take, $withServicios)
-    {
-        //todo: encontrar mejor manera de hacer esto, con ::where()->get() y ->empty() siempre decia que estaba vacio.
-        $resolution = [];
-
-        try {
-            // Si take es 0 se ensena todo
-            if ($take == 0) {
-                $citas = Cita::where('empleado_id', '=', $idEmpleado)->skip($skip)->take(Cita::count())->get();
-            } else {
-                $citas = Cita::where('empleado_id', '=', $idEmpleado)->skip($skip)->take($take)->get();
-            }
-
-            // skip y take para limitar las lineas mostradas
-            if ($skip > $citas->count()+1) {
-                return response()->json(['Message' => 'skip supera el número de lineas en tabla'], 400);
-            }
-
-            foreach ($citas as $cita) {
-                array_push($resolution, Cita::find($cita->id));
-            }
-
-            if ($resolution == []) {
-                throw new ModelNotFoundException();
-            }
-        } catch (ModelNotFoundException) {
-            return response()->json(['message' => 'cita no encontrada'], 404);
-        }
-
-        //$withServicios es un booleano para indicar si se quieren ver los servicios o no de cada cita
-        $withServicios == "true" ? $return = response()->json($citas->load('servicios'), 200) :
-            $return = response()->json($citas, 200);
-
-        return $return;
-    }
-
-    /**
-     * Muestra las citas con sus servicios donde tengan un contrato y cliente especifico
-     */
-    public function showContractClient($idContrato, $idCliente, $skip, $take, $withServicios)
-    {
-        //todo: encontrar mejor manera de hacer esto, con ::where()->get() y ->empty() siempre decia que estaba vacio.
-        $resolution = [];
-
-        try {
-            // Si take es 0 se ensena todo
-            if ($take == 0) {
-                $citas =
-                    Cita::where('contrato_id', '=', $idContrato,)
-                    ->where('cliente_id', '=', $idCliente)
-                    ->skip($skip)->take(Cita::count())->get();
-            } else {
-                $citas =
-                    Cita::where('contrato_id', '=', $idContrato,)
-                    ->where('cliente_id', '=', $idCliente)
-                    ->skip($skip)->take($take)->get();
-            }
-
-            // skip y take para limitar las lineas mostradas
-            if ($skip > $citas->count()+1) {
-                return response()->json(['Message' => 'skip supera el número de lineas en tabla'], 400);
-            }
-
-            foreach ($citas as $cita) {
-                array_push($resolution, Cita::find($cita->id));
-            }
-
-            if ($resolution == []) {
-                throw new ModelNotFoundException();
-            }
-        } catch (ModelNotFoundException) {
-            return response()->json(['message' => 'cita no encontrada'], 404);
-        }
-
-        //$withServicios es un booleano para indicar si se quieren ver los servicios o no de cada cita
-        $withServicios == "true" ? $return = response()->json($citas->load('servicios'), 200) :
-            $return = response()->json($citas, 200);
-
-        return $return;
-    }
-
-    /**
-     * Muestra las citas con sus servicios
-     */
-    public function showContractEmployee($idContrato, $idEmpleado, $skip, $take, $withServicios)
-    {
-        //todo: encontrar mejor manera de hacer esto, con ::where()->get() y ->empty() siempre decia que estaba vacio.
-        $resolution = [];
-
-        try {
-            // Si take es 0 se ensena todo
-            if ($take == 0) {
-                $citas =
-                    Cita::where('contrato_id', '=', $idContrato,)
-                    ->where('empleado_id', '=', $idEmpleado)
-                    ->skip($skip)->take(Cita::count())->get();
-            } else {
-                $citas =
-                    Cita::where('contrato_id', '=', $idContrato,)
-                    ->where('empleado_id', '=', $idEmpleado)
-                    ->skip($skip)->take($take)->get();
-            }
-
-            // skip y take para limitar las lineas mostradas
-            if ($skip > $citas->count()+1) {
-                return response()->json(['Message' => 'skip supera el número de lineas en tabla'], 400);
-            }
-
-            foreach ($citas as $cita) {
-                array_push($resolution, Cita::find($cita->id));
-            }
-
-            if ($resolution == []) {
-                throw new ModelNotFoundException();
-            }
-        } catch (ModelNotFoundException) {
-            return response()->json(['message' => 'cita no encontrada'], 404);
-        }
-
-        //$withServicios es un booleano para indicar si se quieren ver los servicios o no de cada cita
-        $withServicios == "true" ? $return = response()->json($citas->load('servicios'), 200) :
-            $return = response()->json($citas, 200);
-
-        return $return;
-    }
-
-    /**
-     * Muestra las citas con sus servicios
-     */
-    public function showClientEmployee($idCliente, $idEmpleado, $skip, $take, $withServicios)
-    {
-        //todo: encontrar mejor manera de hacer esto, con ::where()->get() y ->empty() siempre decia que estaba vacio.
-        $resolution = [];
-
-        try {
-            // Si take es 0 se ensena todo
-            if ($take == 0) {
-                $citas =
-                    Cita::where('cliente_id', '=', $idCliente,)
-                    ->where('empleado_id', '=', $idEmpleado)
-                    ->skip($skip)->take(Cita::count())->get();
-            } else {
-                $citas =
-                    Cita::where('cliente_id', '=', $idCliente,)
-                    ->where('empleado_id', '=', $idEmpleado)
-                    ->skip($skip)->take($take)->get();
-            }
-
-            // skip y take para limitar las lineas mostradas
-            if ($skip > $citas->count()+1) {
-                return response()->json(['Message' => 'skip supera el número de lineas en tabla'], 400);
-            }
-
-            foreach ($citas as $cita) {
-                array_push($resolution, Cita::find($cita->id));
-            }
-
-            if ($resolution == []) {
-                throw new ModelNotFoundException();
-            }
-        } catch (ModelNotFoundException) {
-            return response()->json(['message' => 'cita no encontrada'], 404);
-        }
-
-        //$withServicios es un booleano para indicar si se quieren ver los servicios o no de cada cita
-        $withServicios == "true" ? $return = response()->json($citas->load('servicios'), 200) :
-            $return = response()->json($citas, 200);
-
-        return $return;
+        return response()->json($citas, 200);
     }
 
     /**

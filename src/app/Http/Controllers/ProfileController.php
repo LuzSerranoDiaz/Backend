@@ -152,4 +152,41 @@ class ProfileController extends Controller
             'cliente' => $cliente,
         ], 200);
     }
+
+    /**
+     * Actualiza solo contrasena
+     * 
+     */
+    public function updatePwd(Request $request) {
+        // Obtener el usuario autenticado
+        $id = Auth::id();
+        $user = Usuario::find($id);
+
+        if (!$user) {
+            return response()->json(['message' => 'Usuario no autenticado'], 401);
+        }
+
+        // Validar los datos para el usuario
+        $validatedUserData = $request->validate([
+            'contrasena' => 'sometimes|string|min:8|confirmed',
+        ], [
+            'contrasena.min' => 'La contraseña tiene que tener al menos 8 caracteres.',
+            'contrasena.confirmed' => 'Las contraseñas deben ser iguales'
+        ]);
+
+        $user->update($validatedUserData);
+
+        if ($user->cliente) {
+            $cliente = $user->cliente;
+        } else {
+            $cliente = [];
+        }
+
+        // Respuesta exitosa con los datos actualizados
+        return response()->json([
+            'message' => 'Datos de usuario y cliente actualizados exitosamente',
+            'usuario' => $user,
+            'cliente' => $cliente,
+        ], 200);
+    }
 }

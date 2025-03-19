@@ -40,7 +40,7 @@ Route::put('profile', [ProfileController::class, 'update'])->middleware('auth:sa
 // Clientes
 Route::post('customers', [CustomerController::class, 'add']);
 Route::post('{id}/customers', [CustomerController::class, 'addClient']);
-Route::get('customers/{offset}/{limit}', [CustomerController::class, 'show']);
+Route::get('customers', [CustomerController::class, 'show']);
 Route::get('customers/{id}', [CustomerController::class, 'getCustomer']);
 Route::put('customer/{id}', [CustomerController::class, 'update']);
 Route::delete('customers/{id}', [CustomerController::class, 'delete']);
@@ -54,45 +54,46 @@ Route::put('contracts/{contractId}', [ContractController::class, 'update']);
 Route::delete('contracts/{contractId}', [ContractController::class, 'delete']);
 
 //Empleados
-Route::post('employees', [EmployeeController::class, 'add']); 
-Route::post('{id}/employees', [EmployeeController::class, 'addEmployee']); 
-Route::get('employees', [EmployeeController::class, 'show']); 
-Route::get('employees/{id}', [EmployeeController::class, 'getEmployee']); 
+Route::post('employees', [EmployeeController::class, 'add']);
+Route::post('{id}/employees', [EmployeeController::class, 'addEmployee']);
+Route::get('employees', [EmployeeController::class, 'show']);
+Route::get('employees/{id}', [EmployeeController::class, 'getEmployee']);
 Route::put('employees/{id}', [EmployeeController::class, 'update']);
-Route::delete('employees/{id}', [EmployeeController::class, 'delete']); 
+Route::delete('employees/{id}', [EmployeeController::class, 'delete']);
 
 //Citas
-Route::post('appointments', [AppointmentController::class, 'add']); 
-/* withServicios es "booleano", true es true y si pones cualquier otra cosa es false */
-Route::get('appointments/{offset}/{limit}/{withServicios}', [AppointmentController::class, 'show']);
-/* Recoger citas de un contrato/cliente/empleado especifico */
-Route::get('appointments/contract/{idContrato}/{offset}/{limit}/{withServicios}', [AppointmentController::class, 'showContract']); 
-Route::get('appointments/client/{idCliente}/{offset}/{limit}/{withServicios}', [AppointmentController::class, 'showClient']);  
-Route::get('appointments/employee/{idEmpleado}/{offset}/{limit}/{withServicios}', [AppointmentController::class, 'showEmployee']);
-/* Recoger citas con varios ids */
-Route::get('appointments/contract-client/{idContrato}/{idCliente}/{offset}/{limit}/{withServicios}', [AppointmentController::class, 'showContractClient']); 
-Route::get('appointments/contract-employee/{idContrato}/{idEmpleado}/{offset}/{limit}/{withServicios}', [AppointmentController::class, 'showContractEmployee']);  
-Route::get('appointments/client-employee/{idCliente}/{idEmpleado}/{offset}/{limit}/{withServicios}', [AppointmentController::class, 'showClientEmployee']);
-/* Resto de rutas */
-Route::get('appointments/{id}/{withServicios}', [AppointmentController::class, 'getAppointment']); 
-Route::put('appointments/{id}', [AppointmentController::class, 'update']); 
-Route::delete('appointments/{id}', [AppointmentController::class, 'delete']); 
+Route::post('appointments', [AppointmentController::class, 'add']);
+/**
+ *      nombre_cliente y nombre_empleado: string
+ *      DNI_cliente y DNI_empleado: string con ocho digitos y una letra
+ *      fecha: datetime
+ *      estado: enum ('pendiente', 'cancelado', 'completo')
+ *      skip: el numero de lineas que se saltara la query, por ejemplo skip(5) no ensena las primeras 5 lineas de la tabla
+ *      take: el numero de lineas que ensenara/limitara la query, por ejemplo take(5) solo ensena 5 lineas
+ *      withServicios: un booleano falso, escribe un string "true" para enseñar los servicios asociados a su cita, cualquier otra cosa para no hacerlo 
+ * 
+ * Se manda con parametros, que toman forma de por ejemplo "appointments?nombreCliente=Rafa&nombre_empleado:Alicia"
+ */
+Route::get('appointments',[AppointmentController::class, 'show']);
+Route::get('appointments/{id}/{withServicios}', [AppointmentController::class, 'getAppointment']);
+Route::put('appointments/{id}', [AppointmentController::class, 'update']);
+Route::delete('appointments/{id}', [AppointmentController::class, 'delete']);
 
 //Servicios
 Route::post('services', [ServiceController::class, 'add']);
-Route::get('services', [ServiceController::class, 'show']); 
-Route::get('services/{id}', [ServiceController::class, 'getService']); 
-Route::put('services/{id}', [ServiceController::class, 'update']); 
-Route::delete('services/{id}', [ServiceController::class, 'delete']); 
+Route::get('services', [ServiceController::class, 'show']);
+Route::get('services/{id}', [ServiceController::class, 'getService']);
+Route::put('services/{id}', [ServiceController::class, 'update']);
+Route::delete('services/{id}', [ServiceController::class, 'delete']);
 
 // Especialidades
 Route::post('specialties', [SpecialtyController::class, 'add']);
-Route::get('specialties', [SpecialtyController::class, 'show']); 
-Route::get('specialties/{id}', [SpecialtyController::class, 'getSpecialty']); 
-Route::put('specialties/{id}', [SpecialtyController::class, 'update']); 
-Route::delete('specialties/{id}', [SpecialtyController::class, 'delete']); 
+Route::get('specialties', [SpecialtyController::class, 'show']);
+Route::get('specialties/{id}', [SpecialtyController::class, 'getSpecialty']);
+Route::put('specialties/{id}', [SpecialtyController::class, 'update']);
+Route::delete('specialties/{id}', [SpecialtyController::class, 'delete']);
 
 // Rutas para asignar especialidades a empleados
-Route::post('employees/{employee}/specialties', [EmployeeSpecialtyController::class, 'assign']); 
+Route::post('employees/{employee}/specialties', [EmployeeSpecialtyController::class, 'assign']);
 Route::get('employees/{employee}/specialties', [EmployeeSpecialtyController::class, 'list']);
-Route::delete('employees/{employee}/specialties/{specialty}', [EmployeeSpecialtyController::class, 'delete']); 
+Route::delete('employees/{employee}/specialties/{specialty}', [EmployeeSpecialtyController::class, 'delete']);

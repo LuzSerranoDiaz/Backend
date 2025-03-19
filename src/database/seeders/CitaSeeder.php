@@ -15,7 +15,7 @@ class CitaSeeder extends Seeder
     public function run(): void
     {
         //Seeder para ir anadiendo citas poco a poco, ejecutar varias veces.
-        //Cita::factory(3000)->create();
-        CitaServicio::factory(rand(1000,3000))->create();
+        //Cita::factory(30000)->create();
+        CitaServicio::factory(1000)->create();
     }
 }

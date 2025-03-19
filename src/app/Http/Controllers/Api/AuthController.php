@@ -81,10 +81,10 @@ class AuthController extends Controller
             'email' => 'required|email',
             'contrasena' => 'required|min:8',
         ], [
-        'email.required' => 'El campo email es obligatorio.',
-        'email.email' => 'El email debe ser una dirección válida.',
-        'contrasena.required' => 'El campo contraseña es obligatorio.',
-        'contrasena.min' => 'La contraseña debe tener al menos 8 caracteres.'
+            'email.required' => 'El campo email es obligatorio.',
+            'email.email' => 'El email debe ser una dirección válida.',
+            'contrasena.required' => 'El campo contraseña es obligatorio.',
+            'contrasena.min' => 'La contraseña debe tener al menos 8 caracteres.'
         ]);
 
         if ($validator->fails()) {
@@ -150,4 +150,28 @@ class AuthController extends Controller
         ], 401);
     }
 
+    /**
+     * Borrar un usuario
+     * 
+     */
+    public function deleteUser(Request $request){
+        // Verifica si el usuario está autenticado
+        if (Auth::check()) {
+            // Obtén el usuario autenticado
+            $id = Auth::id();
+            $user = Usuario::find($id);
+            $user->delete();
+
+            // Retorna los datos del usuario en formato JSON
+            return response()->json([
+                'success' => true
+            ], 200);
+        }
+
+        // Si no está autenticado, retorna un error
+        return response()->json([
+            'success' => false,
+            'message' => 'Usuario no autenticado'
+        ], 401);
+    }
 }

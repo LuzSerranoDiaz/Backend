@@ -157,13 +157,38 @@ class EmployeeController extends Controller
     /**
      * Muestra los empelados
      */
-    public function show() {
+    public function show(Request $request) {
 
-        $empleados = Empleado::with('usuario')->get();
+        $query = Empleado::with('usuario')
+            ->select('empleados.*')
+            ->join('usuarios', 'usuario_id', 'usuarios.id');
 
-        // Verifica si la colección de empleados está vacía
+        if ($request->get('nombre')) {
+            $query = $query->where('usuarios.nombre', 'LIKE', $request->get('nombre') . '%');
+        }
+        if ($request->get('apellidos')) {
+            $query = $query->where('empleados.apellidos', 'LIKE', $request->get('apellidos') . '%');
+        }
+        if ($request->get('tlf')) {
+            $query = $query->where('empleados.tlf', 'LIKE', '%' . $request->get('tlf') . '%');
+        }
+        if ($request->get('DNI')) {
+            $query = $query->where('empleados.DNI', 'LIKE', '%' . $request->get('DNI') . '%');
+        }
+
+        $empleados = $query->get();
+
+        if ($request->get('skip')) {
+            $empleados = $empleados->skip((int)$request->get('skip'));
+        }
+        if ($request->get('take')) {
+            $empleados = $empleados->take((int)$request->get('take'));
+        } else {
+            $empleados = $empleados->take(Empleado::count());
+        }
+
         if ($empleados->isEmpty()) {
-            return response()->json(['message' => 'No hay empleados registrados'], 404);
+            return response()->json(['message' => 'No hay empleados en esta query'], 404);
         }
 
         return response()->json($empleados, 200);
@@ -195,7 +220,7 @@ class EmployeeController extends Controller
 
         $validatedData = $request->validate([
             'usuario_id' => 'sometimes|exists:usuarios,id',
-            'DNI' => 'sometimes|string|size:9|unique:clientes,DNI|regex:/^\d{8}[A-Z]$/',
+            'DNI' => 'sometimes|string|size:9|unique:empleados,DNI|regex:/^\d{8}[A-Z]$/',
             'anos_experiencia' => 'sometimes|integer|max:80',
             'nombre' => 'sometimes|string|max:255',
             'nombreUsuario' => 'sometimes|string|max:255',

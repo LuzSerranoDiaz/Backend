@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Cliente;
 use App\Models\Usuario;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Clase Controlador de Cliente y su usuario asociado
@@ -145,25 +146,42 @@ class CustomerController extends Controller
     /**
      * Muestra los clientes
      */
-    public function show($skip, $take)
+    public function show(Request $request)
     {
-        // skip y take para limitar las lineas mostradas
-        if ($skip >= Cliente::count()) {
-            return response()->json(['Message' => 'skip supera el número de lineas en tabla'], 400);
+
+        $query = Cliente::with('usuario')
+            ->select('clientes.*')
+            ->join('usuarios', 'usuario_id', 'usuarios.id');
+
+        if ($request->get('nombre')) {
+            $query = $query->where('usuarios.nombre', 'LIKE', $request->get('nombre') . '%');
+        }
+        if ($request->get('apellidos')) {
+            $query = $query->where('clientes.apellidos', 'LIKE', $request->get('apellidos') . '%');
+        }
+        if ($request->get('tlf')) {
+            $query = $query->where('clientes.tlf', 'LIKE', '%' . $request->get('tlf') . '%');
+        }
+        if ($request->get('DNI')) {
+            $query = $query->where('clientes.DNI', 'LIKE', '%' . $request->get('DNI') . '%');
         }
 
-        // Si take es 0 se ensena todo
-        if ($take == 0) {
-            $clientes = cliente::all()->skip($skip)->take(cliente::count());
+        $clientes = $query->get();
+
+        if ($request->get('skip')) {
+            $clientes = $clientes->skip((int)$request->get('skip'));
+        }
+        if ($request->get('take')) {
+            $clientes = $clientes->take((int)$request->get('take'));
         } else {
-            $clientes = cliente::all()->skip($skip)->take($take);
+            $clientes = $clientes->take(Cliente::count());
         }
 
         if ($clientes->isEmpty()) {
-            return response()->json(['message' => 'No hay clientes registradas'], 404);
+            return response()->json(['message' => 'No hay clientes en esta query'], 404);
         }
 
-        return response()->json($clientes->load('usuario'), 200);
+        return response()->json($clientes, 200);
     }
 
     /**
@@ -236,7 +254,7 @@ class CustomerController extends Controller
         if (array_key_exists('DNI', $validatedData) && $validatedData['DNI'] == "") {
             $validatedData['DNI'] = $cliente->DNI;
         } elseif (!array_key_exists('DNI', $validatedData)) {
-            $validatedData['DNI'] = $cliente->DNI; 
+            $validatedData['DNI'] = $cliente->DNI;
         }
         /*
         if ($validatedData['DNI'] == "") {

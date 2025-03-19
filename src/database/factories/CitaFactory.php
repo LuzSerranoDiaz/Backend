@@ -36,7 +36,7 @@ class CitaFactory extends Factory
         return [
             'cliente_id' => $cliente_id,
             'empleado_id' => $empleado_id,
-            'contrato_id' => $empleado_id,
+            'contrato_id' => $cliente_id,
             'fecha' => fake()->unique()->dateTime(),
             'estado' => fake()->randomElement(['pendiente', 'cancelado', 'completado']),
             'numero_de_atenciones' => 1,
