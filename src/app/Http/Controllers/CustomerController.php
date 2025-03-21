@@ -149,8 +149,21 @@ class CustomerController extends Controller
     public function show(Request $request)
     {
 
-        $query = Cliente::with('usuario')
-            ->select('clientes.*')
+        $query = /* Cliente::with('usuario') */
+            DB::table('clientes')
+            ->select(
+                'clientes.id',
+                'clientes.apellidos',
+                'clientes.tlf',
+                'clientes.direccion',
+                'clientes.municipio',
+                'clientes.provincia',
+                'clientes.DNI',
+                'usuarios.email',
+                'usuarios.contrasena',
+                'usuarios.nombre',
+                'usuarios.nombreUsuario'
+            )
             ->join('usuarios', 'usuario_id', 'usuarios.id');
 
         if ($request->get('nombre')) {
