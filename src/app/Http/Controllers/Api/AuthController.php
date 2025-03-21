@@ -152,6 +152,7 @@ class AuthController extends Controller
 
     /**
      * Borrar un usuario
+     * 
      */
     public function deleteUser(Request $request){
         // Verifica si el usuario está autenticado
