@@ -224,7 +224,7 @@ class CustomerController extends Controller
         }
 
         $validatedData = $request->validate([
-            'usuario_id' => 'sometimes|exists:usuarios,id',
+            //'usuario_id' => 'sometimes|exists:usuarios,id',
             'DNI' => 'sometimes|string|size:9|unique:clientes,DNI|regex:/^\d{8}[A-Z]$/',
             'nombre' => 'sometimes|string|max:255',
             'nombreUsuario' => 'sometimes|unique:usuarios,nombreUsuario|string|max:255',
@@ -269,10 +269,6 @@ class CustomerController extends Controller
         } elseif (!array_key_exists('DNI', $validatedData)) {
             $validatedData['DNI'] = $cliente->DNI;
         }
-        /*
-        if ($validatedData['DNI'] == "") {
-            $validatedData['DNI'] = $cliente->DNI;
-        }*/
 
         $cliente->update($validatedData);
         $usuario->update($validatedData);

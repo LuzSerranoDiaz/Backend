@@ -9581,6 +9581,7 @@
         "laravel/pail",
         "laravel/pint",
         "laravel/sail",
+        "laravel/telescope",
         "mockery/mockery",
         "myclabs/deep-copy",
         "nunomaduro/collision",

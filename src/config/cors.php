@@ -22,6 +22,7 @@ return [
         'register',
         'customers',
         'customers/*',
+        'customer/*',
         'profile',
         'contracts',
         'employees',

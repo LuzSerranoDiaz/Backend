@@ -42,7 +42,8 @@ Route::post('customers', [CustomerController::class, 'add']);
 Route::post('{id}/customers', [CustomerController::class, 'addClient']);
 Route::get('customers', [CustomerController::class, 'show']);
 Route::get('customers/{id}', [CustomerController::class, 'getCustomer']);
-Route::put('customer/{id}', [CustomerController::class, 'update']);
+Route::put('customers/{id}', [CustomerController::class, 'update']);
+Route::put('customers/{id}', [CustomerController::class, 'update']);
 Route::delete('customers/{id}', [CustomerController::class, 'delete']);
 
 // Rutas para gestionar contratos de un cliente específico
