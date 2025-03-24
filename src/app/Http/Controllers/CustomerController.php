@@ -234,7 +234,7 @@ class CustomerController extends Controller
             'direccion' => 'sometimes|string|max:255',
             'municipio' => 'sometimes|string|max:255',
             'provincia' => 'sometimes|string|max:255',
-            'contrasena' => 'sometimes|string|min:8|confirmed', //necesita confirmar contraseña
+            'contrasena' => 'sometimes|string|min:8', //necesita confirmar contraseña
         ], [
             'DNI.size' => 'El DNI debe tener 9 caracteres.',
             'DNI.regex' => 'El formato del DNI no es válido. Debe tener 8 números seguidos de una letra.',
