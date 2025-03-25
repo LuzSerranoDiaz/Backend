@@ -149,8 +149,7 @@ class CustomerController extends Controller
     public function show(Request $request)
     {
 
-        $query = /* Cliente::with('usuario') */
-            DB::table('clientes')
+        $query = DB::table('clientes')
             ->select(
                 'clientes.id',
                 'clientes.apellidos',
@@ -202,9 +201,23 @@ class CustomerController extends Controller
      */
     public function getCustomer($id)
     {
-        $cliente = Cliente::with('usuario')->find($id);
+        $cliente = DB::table('clientes')
+            ->select(
+                'clientes.id',
+                'clientes.apellidos',
+                'clientes.tlf',
+                'clientes.direccion',
+                'clientes.municipio',
+                'clientes.provincia',
+                'clientes.DNI',
+                'usuarios.email',
+                'usuarios.contrasena',
+                'usuarios.nombre',
+                'usuarios.nombreUsuario'
+            )->join('usuarios', 'usuario_id', 'usuarios.id')
+            ->where('clientes.id', $id)->get();
 
-        if (!$cliente) {
+        if ($cliente->isEmpty()) {
             return response()->json(['message' => 'Cliente no encontrado'], 404);
         }
 
