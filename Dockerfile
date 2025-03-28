@@ -15,12 +15,6 @@ RUN docker-php-ext-install pdo pdo_mysql \
 
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
-
 USER root
 
 RUN chmod 777 -R /var/www/app
-
-
-#RUN composer require laravel/sanctum
-#RUN php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"
-#RUN php artisan migrate

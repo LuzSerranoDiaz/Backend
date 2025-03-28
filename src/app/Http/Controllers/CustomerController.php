@@ -168,6 +168,9 @@ class CustomerController extends Controller
         if ($request->get('nombre')) {
             $query = $query->where('usuarios.nombre', 'LIKE', $request->get('nombre') . '%');
         }
+        if ($request->get('email')) {
+            $query = $query->where('usuarios.email', 'LIKE', '%' . $request->get('email') . '%');
+        }
         if ($request->get('apellidos')) {
             $query = $query->where('clientes.apellidos', 'LIKE', $request->get('apellidos') . '%');
         }
@@ -235,15 +238,14 @@ class CustomerController extends Controller
         if (!$cliente) {
             return response()->json(['message' => 'Cliente no encontrado'], 404);
         }
-
         $validatedData = $request->validate([
             //'usuario_id' => 'sometimes|exists:usuarios,id',
-            'DNI' => 'sometimes|string|size:9|unique:clientes,DNI|regex:/^\d{8}[A-Z]$/',
+            'DNI' => 'sometimes|string|size:9|regex:/^\d{8}[A-Z]$/',
             'nombre' => 'sometimes|string|max:255',
-            'nombreUsuario' => 'sometimes|unique:usuarios,nombreUsuario|string|max:255',
+            'nombreUsuario' => 'sometimes|string|max:255',
             'apellidos' => 'sometimes|string|max:255',
-            'email' => 'sometimes|email|unique:usuarios,email,' . $cliente->usuario_id,
-            'tlf' => 'sometimes|unique:clientes,tlf|digits_between:9,15|regex:/^\+?\d+$/',
+            'email' => 'sometimes|email',
+            'tlf' => 'sometimes|digits_between:9,15|regex:/^\+?\d+$/',
             'direccion' => 'sometimes|string|max:255',
             'municipio' => 'sometimes|string|max:255',
             'provincia' => 'sometimes|string|max:255',

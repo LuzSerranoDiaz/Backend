@@ -40,7 +40,7 @@ Route::put('profile', [ProfileController::class, 'update'])->middleware('auth:sa
 // Clientes
 Route::post('customers', [CustomerController::class, 'add']);
 Route::post('{id}/customers', [CustomerController::class, 'addClient']);
-Route::get('customers', [CustomerController::class, 'show']);
+Route::get('customers', [CustomerController::class, 'show'])->middleware('auth:sanctum');;
 Route::get('customers/{id}', [CustomerController::class, 'getCustomer']);
 Route::put('customers/{id}', [CustomerController::class, 'update']);
 Route::put('customers/{id}', [CustomerController::class, 'update']);
