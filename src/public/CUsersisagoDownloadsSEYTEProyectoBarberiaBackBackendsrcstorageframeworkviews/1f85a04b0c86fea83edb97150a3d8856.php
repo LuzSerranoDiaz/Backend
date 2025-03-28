@@ -152,7 +152,7 @@
                         <div x-show="! includeVendorFrames">
                             <div class="text-gray-500">
                                 <?php echo e($exception->frames()->slice($loop->index + 1)->count()); ?> vendor
-                                frame<?php echo e($exception->frames()->slice($loop->index + 1)->count() > 1 ? 's' : ''); ?> collapsed
+                                frame<?php echo htmlspecialchars($exception->frames()->slice($loop->index + 1)->count() > 1 ? 's' : ''); ?> collapsed
                             </div>
                         </div>
                     <?php endif; ?>

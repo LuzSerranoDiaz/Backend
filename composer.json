@@ -1,6 +1,10 @@
 {
     "require": {
         "laravel/telescope": "^5.6",
-        "laravel/sanctum": "^4.0"
+        "laravel/sanctum": "^4.0",
+        "illuminate/view": "*",
+        "illuminate/database": "*",
+        "illuminate/session": "*",
+        "illuminate/support": "*"
     }
 }
