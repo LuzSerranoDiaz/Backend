@@ -38,13 +38,13 @@ Route::post('profile', [ProfileController::class, 'add'])->middleware('auth:sanc
 Route::put('profile', [ProfileController::class, 'update'])->middleware('auth:sanctum');
 
 // Clientes
-Route::post('customers', [CustomerController::class, 'add']);
-Route::post('{id}/customers', [CustomerController::class, 'addClient']);
-Route::get('customers', [CustomerController::class, 'show'])->middleware('auth:sanctum');;
-Route::get('customers/{id}', [CustomerController::class, 'getCustomer']);
-Route::put('customers/{id}', [CustomerController::class, 'update']);
-Route::put('customers/{id}', [CustomerController::class, 'update']);
-Route::delete('customers/{id}', [CustomerController::class, 'delete']);
+Route::post('customers', [CustomerController::class, 'add'])->middleware('auth:sanctum');
+Route::post('{id}/customers', [CustomerController::class, 'addClient'])->middleware('auth:sanctum');
+Route::get('customers', [CustomerController::class, 'show'])->middleware('auth:sanctum');
+Route::get('customers/{id}', [CustomerController::class, 'getCustomer'])->middleware('auth:sanctum');
+Route::put('customers/{id}', [CustomerController::class, 'update'])->middleware('auth:sanctum');
+Route::put('customers/{id}', [CustomerController::class, 'update'])->middleware('auth:sanctum');
+Route::delete('customers/{id}', [CustomerController::class, 'delete'])->middleware('auth:sanctum');
 
 // Rutas para gestionar contratos de un cliente específico
 Route::post('customers/{id}/contracts', [ContractController::class, 'add']);
