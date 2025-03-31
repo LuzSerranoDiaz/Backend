@@ -24,7 +24,3 @@ mysql:
 
 nginx:
 	@docker exec -it nginx sh
-
-chmod:
-	@sudo chown ${USER}:${USER} src/*
-	@sudo chmod -R 777 src/*
