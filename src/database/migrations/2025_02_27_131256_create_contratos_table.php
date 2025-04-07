@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('cliente_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->integer('numero_de_atenciones');
-            $table->integer('numero_de_atenciones_realizadas');
-            $table->dateTime('fecha_inicio');
+            $table->integer('numero_de_atenciones_realizadas')->default(0);
+            $table->dateTime('fecha_inicio')->default(now());
             $table->dateTime('fecha_fin');
             $table->timestamps();
         });

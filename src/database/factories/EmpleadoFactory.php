@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\Empleado;
 use App\Models\Especialidad;
 use App\Models\Usuario;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -22,8 +23,10 @@ class EmpleadoFactory extends Factory
         $usuario_id = Usuario::pluck('id')->toArray();
 
         return [
-            'usuario_id' => fake()->randomElement($usuario_id),
-            'anos_experiencia' => random_int(0, 10),
+            'usuario_id' => fake()->unique()->randomElement($usuario_id),
+            'DNI' => Str::random(9),
+            'apellidos' => fake()->lastName(),
+            'anos_experiencia' => random_int(0, 20),
             'tlf' => fake()->unique()->phoneNumber(),
             'direccion' => fake()->address(),
             'municipio' => fake()->city(),

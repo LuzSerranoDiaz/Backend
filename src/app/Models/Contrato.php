@@ -11,6 +11,15 @@ use Illuminate\Notifications\Notifiable;
 class Contrato extends Model
 {
     use HasFactory, Notifiable;
+
+    protected $fillable = [
+        'cliente_id',
+        'numero_de_atenciones',
+        'numero_de_atenciones_realizadas',
+        'fecha_inicio',
+        'fecha_fin',
+    ];
+
     /**
      * Get the cliente that owns the Contrato
      *

@@ -10,7 +10,6 @@ use App\Models\Empleado;
 use App\Models\EmpleadoEspecilidad;
 use App\Models\Especialidad;
 use App\Models\Servicio;
-use App\Models\User;
 use App\Models\Usuario;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -22,27 +21,20 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-/*         Usuario::factory()->count(3004)->create();
-        Cliente::factory()->count(3000)->create();
-        Empleado::factory()->count(4)->create();
+        Usuario::factory(10)->has(
+            Cliente::factory()->has(
+                Contrato::factory()
+            )
+        )->create();
         Especialidad::factory()->create(['nombre' => 'cortar']);
         Especialidad::factory()->create(['nombre' => 'tintar']);
         Especialidad::factory()->create(['nombre' => 'degradar']);
-        Contrato::factory()->count(3000)->create();
-        Cita::factory()->count(30000)->create();
-        Servicio::factory()->count(4)->create();
-        CitaServicio::factory()->count(3000)->create();
-        EmpleadoEspecilidad::factory()->count(12)->create(); */
-        Usuario::factory()->count(14)->create();
-        Cliente::factory()->count(10)->create();
-        Empleado::factory()->count(4)->create();
-        Especialidad::factory()->create(['nombre' => 'cortar']);
-        Especialidad::factory()->create(['nombre' => 'tintar']);
-        Especialidad::factory()->create(['nombre' => 'degradar']);
-        Contrato::factory()->count(10)->create();
-        Cita::factory()->count(100)->create();
-        Servicio::factory()->count(4)->create();
-        CitaServicio::factory()->count(10)->create();
-        EmpleadoEspecilidad::factory()->count(12)->create();
+        Usuario::factory(3)->has(
+            Empleado::factory()
+        )->create();
+        EmpleadoEspecilidad::factory(3)->create();
+        Servicio::factory(3)->create();
+        Cita::factory(100)->create();
+        CitaServicio::factory(random_int(200, 500))->create();
     }
 }

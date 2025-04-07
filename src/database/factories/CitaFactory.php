@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\CitaServicio;
 use App\Models\Cliente;
 use App\Models\Contrato;
 use App\Models\Empleado;
@@ -21,21 +22,24 @@ class CitaFactory extends Factory
      */
     public function definition(): array
     {
-        $cliente_id = Cliente::pluck('id')->toArray();
-        $empleado_id = Empleado::pluck('id')->toArray();
-        $contrato = Contrato::where('cliente_id', '=', $cliente_id)->get();
-        //$contrato = DB::table('contratos')->where('cliente_id', '=', $cliente_id)->get(); 
-        $contrato_id = $contrato->pluck('id')->toArray();
-        $contrato_atenciones = $contrato->pluck('numero_de_atenciones_realizadas')->toArray();
-        //Contrato::where('cliente_id' = $cliente_id)->pluck('id')->toArray();
+        $clientes = Cliente::pluck('id')->toArray();
+        $cliente_id = fake()->randomElement($clientes);
+        $empleados = Empleado::pluck('id')->toArray();
+        $empleado_id = fake()->randomElement($empleados);
+       /*  $contratos = Contrato::pluck('id')->toArray();
+        $contrato_id = fake()->randomElement($contratos);
+        $contrato_id = Contrato::where('cliente_id', '=', strval(array_search($cliente_id, $contratos, true))); */
+        /* $contrato_id = Contrato::find($cliente_id)->id; */ /* Al haber solo un contrato por cliente tienen el mismo id */
+       /*  $contrato = Contrato::where('cliente_id', '=', $cliente_id)->get();
+        $contrato_Id = Contrato::where('cliente_id', '=', $cliente_id)->value('id'); */
 
         return [
-            'cliente_id' => fake()->randomElement($cliente_id),
-            'empleado_id' => fake()->randomElement($empleado_id),
-            'contrato_id' => fake()->randomElement($contrato_id),
+            'cliente_id' => $cliente_id,
+            'empleado_id' => $empleado_id,
+            'contrato_id' => $cliente_id,
             'fecha' => fake()->unique()->dateTime(),
-            'estado' => fake()->randomElement(['pendiente', 'cancelado']),
-            'numero_de_atenciones' => fake()->randomElement($contrato_atenciones),
+            'estado' => fake()->randomElement(['pendiente', 'cancelado', 'completado']),
+            'numero_de_atenciones' => 1,
         ];
     }
 }

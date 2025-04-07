@@ -19,12 +19,12 @@ class UsuarioFactory extends Factory
      */
     public function definition(): array
     {
-        $contrasena = static::$password ??= Hash::make('password');
+        //$contrasena = static::$password ??= Hash::make('password');
         return [
             'email' => fake()->unique()->safeEmail(),
-            'contrasena' => $contrasena,
+            'contrasena' => fake()->password(),
             'nombre' => fake()->name(),
-            'nombreUsuario' => fake()->lastName(),
+            'nombreUsuario' => fake()->unique()->name(),
             'remember_token' => Str::random(10),
         ];
     }

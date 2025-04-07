@@ -10,6 +10,9 @@ use Illuminate\Notifications\Notifiable;
 
 class Especialidad extends Model
 {
+    protected $fillable = [
+        'nombre',
+    ];
     use HasFactory, Notifiable;
     /**
      * Get the empleado that owns the Especialidad
