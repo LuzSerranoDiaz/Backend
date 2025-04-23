@@ -21,6 +21,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        Usuario::factory()->create([
+            'email' => 'admin@admin.com', 
+            'contrasena' => 'vzcRZ2bt', 
+            'nombre' => 'admin', 
+            'nombreUsuario' => 'admin', 
+            'isAdmin' => 1
+        ]);
         Usuario::factory(10)->has(
             Cliente::factory()->has(
                 Contrato::factory()

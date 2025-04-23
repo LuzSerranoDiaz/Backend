@@ -105,6 +105,14 @@ class AuthController extends Controller
         // Generar un token para el usuario autenticado
         $token = $user->createToken('auth_token')->plainTextToken;
 
+/*         if ($user->isAdmin == 1) {
+            return response()->json([
+                'message' => 'Inicio de sesión exitoso',
+                'token_admin' => $token,
+                'token_type' => 'Bearer',
+            ]);
+        } */
+
         return response()->json([
             'message' => 'Inicio de sesión exitoso',
             'token' => $token,

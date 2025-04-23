@@ -16,7 +16,8 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('contrasena');
             $table->string('nombre');
-            $table->string('nombreUsuario');//->default('nombreusuario');
+            $table->string('nombreUsuario');
+            $table->boolean('isAdmin')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });
